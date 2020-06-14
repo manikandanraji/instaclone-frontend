@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import avatar from "../assets/avatar.jpg";
-import post from "../assets/post.jpg";
 import { HeartIcon, CommentIcon, InboxIcon, BookmarkIcon } from "./Icons";
 
 const PostWrapper = styled.div`
@@ -63,7 +62,7 @@ const PostWrapper = styled.div`
 		resize: none;
 		padding: 1rem 0 0 1rem;
 		font-size: 1rem;
-		font-family: 'Fira Sans', sans-serif;
+		font-family: "Fira Sans", sans-serif;
 	}
 `;
 
@@ -84,7 +83,11 @@ const Post = () => {
 				<h3>polygonrunaway</h3>
 			</div>
 
-			<img className="post-img" src={post} alt="post-img" />
+			<img
+				className="post-img"
+				src="https://res.cloudinary.com/douy56nkf/image/upload/v1591743903/twitter-build/iazrxlak5fajg3ihyuog.png"
+				alt="post-img"
+			/>
 
 			<div className="post-actions">
 				<HeartIcon />

@@ -10,10 +10,12 @@ import {
 } from "./Icons";
 
 const NavWrapper = styled.div`
+	position: fixed;
+	top: 0;
+	width: 100%;
 	background-color: #fff;
 	border-bottom: 1px solid #dbdbdb;
 	padding: 1rem 0;
-	margin-bottom: 2rem;
 
 	.nav-logo {
 		position: relative;
