@@ -1,10 +1,9 @@
 import React from "react";
-import defaultAvatar from '../assets/default_avatar.jpg';
+import defaultAvatar from "../assets/default_avatar.jpg";
 
 export const HomeIcon = () => (
 	<svg
 		aria-label="Home"
-		class="_8-yf5 "
 		fill="#262626"
 		height="22"
 		viewBox="0 0 48 48"
@@ -17,7 +16,6 @@ export const HomeIcon = () => (
 export const InboxIcon = () => (
 	<svg
 		aria-label="Direct"
-		class="_8-yf5 "
 		fill="#262626"
 		height="22"
 		viewBox="0 0 48 48"
@@ -30,7 +28,6 @@ export const InboxIcon = () => (
 export const HeartIcon = () => (
 	<svg
 		aria-label="Activity Feed"
-		class="_8-yf5 "
 		fill="#262626"
 		height="22"
 		viewBox="0 0 48 48"
@@ -43,20 +40,47 @@ export const HeartIcon = () => (
 export const ExploreIcon = () => (
 	<svg
 		aria-label="Find People"
-		class="_8-yf5 "
 		fill="#262626"
 		height="22"
 		viewBox="0 0 48 48"
 		width="22"
 	>
 		<path
-			clip-rule="evenodd"
+			clipRule="evenodd"
 			d="M24 0C10.8 0 0 10.8 0 24s10.8 24 24 24 24-10.8 24-24S37.2 0 24 0zm0 45C12.4 45 3 35.6 3 24S12.4 3 24 3s21 9.4 21 21-9.4 21-21 21zm10.2-33.2l-14.8 7c-.3.1-.6.4-.7.7l-7 14.8c-.3.6-.2 1.3.3 1.7.3.3.7.4 1.1.4.2 0 .4 0 .6-.1l14.8-7c.3-.1.6-.4.7-.7l7-14.8c.3-.6.2-1.3-.3-1.7-.4-.5-1.1-.6-1.7-.3zm-7.4 15l-5.5-5.5 10.5-5-5 10.5z"
-			fill-rule="evenodd"
+			fillRule="evenodd"
 		></path>
+	</svg>
+);
+
+export const CommentIcon = () => (
+	<svg
+		aria-label="Comment"
+		fill="#262626"
+		height="22"
+		viewBox="0 0 48 48"
+		width="22"
+	>
+		<path
+			clipRule="evenodd"
+			d="M47.5 46.1l-2.8-11c1.8-3.3 2.8-7.1 2.8-11.1C47.5 11 37 .5 24 .5S.5 11 .5 24 11 47.5 24 47.5c4 0 7.8-1 11.1-2.8l11 2.8c.8.2 1.6-.6 1.4-1.4zm-3-22.1c0 4-1 7-2.6 10-.2.4-.3.9-.2 1.4l2.1 8.4-8.3-2.1c-.5-.1-1-.1-1.4.2-1.8 1-5.2 2.6-10 2.6-11.4 0-20.6-9.2-20.6-20.5S12.7 3.5 24 3.5 44.5 12.7 44.5 24z"
+			fillRule="evenodd"
+		></path>
+	</svg>
+);
+
+export const BookmarkIcon = () => (
+	<svg
+		aria-label="Save"
+		fill="#262626"
+		height="22"
+		viewBox="0 0 48 48"
+		width="22"
+	>
+		<path d="M43.5 48c-.4 0-.8-.2-1.1-.4L24 29 5.6 47.6c-.4.4-1.1.6-1.6.3-.6-.2-1-.8-1-1.4v-45C3 .7 3.7 0 4.5 0h39c.8 0 1.5.7 1.5 1.5v45c0 .6-.4 1.2-.9 1.4-.2.1-.4.1-.6.1zM24 26c.8 0 1.6.3 2.2.9l15.8 16V3H6v39.9l15.8-16c.6-.6 1.4-.9 2.2-.9z"></path>
 	</svg>
 );
 
 export const DefaultAvatar = () => (
 	<img width="22px" height="22px" src={defaultAvatar} alt="default avatar" />
-)
+);

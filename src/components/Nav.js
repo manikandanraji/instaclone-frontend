@@ -13,6 +13,7 @@ const NavWrapper = styled.div`
 	background-color: #fff;
 	border-bottom: 1px solid #dbdbdb;
 	padding: 1rem 0;
+	margin-bottom: 2rem;
 
 	.nav-logo {
 		position: relative;
@@ -21,7 +22,7 @@ const NavWrapper = styled.div`
 
 	nav {
 		display: flex;
-		justify-content: space-around;
+		justify-content: space-between;
 		align-items: center;
 		margin: 0 auto;
 		width: 930px;
