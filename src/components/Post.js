@@ -3,7 +3,7 @@ import styled from "styled-components";
 import avatar from "../assets/avatar.jpg";
 import { HeartIcon, CommentIcon, InboxIcon, BookmarkIcon } from "./Icons";
 
-const PostWrapper = styled.div`
+export const PostWrapper = styled.div`
 	margin: 1rem 0;
 	width: 615px;
 	background: #fff;
@@ -44,10 +44,6 @@ const PostWrapper = styled.div`
 
 	.likes-caption-comments {
 		padding: 1rem;
-	}
-
-	.bold {
-		font-weight: 500;
 	}
 
 	.username {

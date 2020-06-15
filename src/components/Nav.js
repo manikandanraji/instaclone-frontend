@@ -16,6 +16,7 @@ const NavWrapper = styled.div`
 	background-color: #fff;
 	border-bottom: 1px solid #dbdbdb;
 	padding: 1rem 0;
+	z-index: 10;
 
 	.nav-logo {
 		position: relative;
