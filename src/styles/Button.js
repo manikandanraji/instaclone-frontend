@@ -7,6 +7,7 @@ const Button = styled.button`
 	color: #fff;
 	border-radius: 4px;
 	margin-top: 1rem;
+	margin-left: 1rem;
 	font-family: "Fira Sans", sans-serif;
 	font-size: 1rem;
 `;

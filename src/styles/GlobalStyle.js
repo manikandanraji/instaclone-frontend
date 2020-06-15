@@ -29,6 +29,10 @@ const GlobalStyle = createGlobalStyle`
 		color: #0095F6;
 	}
 
+	.bold {
+		font-weight: 500;
+	}
+
 	*:focus {
 	  outline: none;
 	}

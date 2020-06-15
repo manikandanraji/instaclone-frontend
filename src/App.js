@@ -1,23 +1,23 @@
 import React from "react";
-import styled from "styled-components";
+// import styled from "styled-components";
 import GlobalStyle from "./styles/GlobalStyle";
 // import Login from './components/Login';
-// import Signup from './components/Signup';
+// import Signup from "./components/Signup";
+import Container from "./styles/Container";
 import Nav from "./components/Nav";
+import EditProfile from "./components/EditProfile";
+// import Profile from "./components/Profile";
+// import DetailedPost from "./components/DetailedPost";
 // import Post from "./components/Post";
 // import ProfilePreview from "./components/ProfilePreview";
-
-const Container = styled.div`
-	width: 930px;
-	margin: 0 auto;
-`;
 
 const App = () => {
 	return (
 		<>
 			<GlobalStyle />
 			<Nav />
-			<Container style={{ marginTop: "6rem" }}>
+			<Container>
+				<EditProfile />
 			</Container>
 		</>
 	);
