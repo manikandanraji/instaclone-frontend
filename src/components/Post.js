@@ -4,16 +4,61 @@ import { useHistory } from "react-router-dom";
 import LikePost from "./LikePost";
 import SavePost from "./SavePost";
 import Comment from "./Comment";
+import DeletePost from "./DeletePost";
+import Modal from "./Modal";
 import useInput from "../hooks/useInput";
 import Avatar from "../styles/Avatar";
 import { addComment } from "../services/api";
-import { CommentIcon, InboxIcon } from "./Icons";
+import { MoreIcon, CommentIcon, InboxIcon } from "./Icons";
+
+const ModalContentWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+
+	span:last-child {
+		color: inherit;
+	}
+
+	span {
+		display: block;
+		padding: 1rem 0;
+		color: ${props => props.theme.red};
+		border-bottom: 1px solid ${props => props.theme.borderColor};
+		cursor: pointer;
+	}
+`;
+
+const ModalContent = ({ postId, closeModal }) => {
+	const history = useHistory();
+
+	return (
+		<ModalContentWrapper>
+			<span onClick={() => closeModal()}>Cancel</span>
+			<DeletePost postId={postId} closeModal={closeModal}/>
+			<span
+				onClick={() => {
+					closeModal();
+					history.push(`/p/${postId}`);
+				}}
+			>
+				Go to Post
+			</span>
+		</ModalContentWrapper>
+	);
+};
 
 export const PostWrapper = styled.div`
 	width: 615px;
 	background: ${props => props.theme.white};
 	border: 1px solid ${props => props.theme.borderColor};
 	margin-bottom: 1.5rem;
+
+	.post-header-wrapper {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
 
 	.post-header {
 		display: flex;
@@ -72,9 +117,11 @@ const Post = ({ post }) => {
 
 	const [commentsState, setComments] = useState(post.comments);
 	const [likesState, setLikes] = useState(post.likesCount);
+	const [showModal, setShowModal] = useState(false);
 
 	const incLikes = () => setLikes(likesState + 1);
 	const decLikes = () => setLikes(likesState - 1);
+	const closeModal = () => setShowModal(false);
 
 	const handleAddComment = e => {
 		if (e.keyCode === 13) {
@@ -91,16 +138,24 @@ const Post = ({ post }) => {
 
 	return (
 		<PostWrapper>
-			<div className="post-header">
-				<Avatar
-					className="pointer"
-					src={post.user?.avatar}
-					alt="avatar"
-					onClick={() => history.push(`/${post.user?.username}`)}
-				/>
-				<h3 onClick={() => history.push(`/${post.user?.username}`)}>
-					{post.user?.username}
-				</h3>
+			<div className="post-header-wrapper">
+				<div className="post-header">
+					<Avatar
+						className="pointer"
+						src={post.user?.avatar}
+						alt="avatar"
+						onClick={() => history.push(`/${post.user?.username}`)}
+					/>
+					<h3 onClick={() => history.push(`/${post.user?.username}`)}>
+						{post.user?.username}
+					</h3>
+				</div>
+				{showModal && (
+					<Modal center="true" width="320px" height="180px">
+						<ModalContent closeModal={closeModal} postId={post._id} />
+					</Modal>
+				)}
+				{post.isMine && <MoreIcon onClick={() => setShowModal(true)} />}
 			</div>
 
 			<img

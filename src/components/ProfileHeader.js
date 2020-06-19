@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useHistory } from 'react-router-dom';
+import Follow from "../components/Follow";
 import Button from "../styles/Button";
 
 const Wrapper = styled.div`
@@ -36,6 +37,12 @@ const Wrapper = styled.div`
 
 const ProfileHeader = ({ profile }) => {
 	const history = useHistory()
+	const [followersState, setFollowers] = useState(0)
+
+	const incFollowers = () => setFollowers(followersState + 1)
+	const decFollowers = () => setFollowers(followersState - 1)
+
+	useEffect(() => setFollowers(profile?.followersCount), [profile])
 
 	return (
 		<Wrapper>
@@ -46,12 +53,12 @@ const ProfileHeader = ({ profile }) => {
 					{profile?.isMe ? (
 						<Button secondary onClick={() => history.push('/accounts/edit')}>Edit Profile</Button>
 					) : (
-						<Button>follow</Button>
+						<Follow isFollowing={profile?.isFollowing} incFollowers={incFollowers} decFollowers={decFollowers} userId={profile?._id}/>
 					)}
 				</div>
 				<div className="profile-stats">
 					<span>{profile?.postCount} posts</span>
-					<span>{profile?.followersCount} followers</span>
+					<span>{followersState} followers</span>
 					<span>{profile?.followingCount} following</span>
 				</div>
 				<div className="bio">

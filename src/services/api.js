@@ -61,3 +61,8 @@ export const getProfile = async ({ username }) => {
 	const { token } = JSON.parse(localStorage.getItem('user'))
 	return await api.get(`/users/${username}`, { headers: { Authorization: `Bearer ${token}` } })
 }
+
+export const follow = async ({ url }) => {
+	const { token } = JSON.parse(localStorage.getItem('user'))
+	return await api.get(url, { headers: { Authorization: `Bearer ${token}` } })
+}

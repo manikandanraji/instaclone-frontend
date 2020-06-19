@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { keyframes } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
 const openModal = keyframes`
 	from {
@@ -23,8 +23,8 @@ const ModalWrapper = styled.div`
 	animation: ${openModal} 0.5s ease-in-out;
 
 	div.modal-content {
-		width: 700px;
-		height: 500px;
+		width: ${props => (props.width ? props.width : "700px")};
+		height: ${props => (props.height ? props.height : "500px")};
 		margin: 5rem auto;
 		background: ${props => props.theme.white};
 		border-radius: 4px;
@@ -35,11 +35,19 @@ const ModalWrapper = styled.div`
 		height: 80%;
 		object-fit: cover;
 	}
+
+	${props =>
+		props.center &&
+		css`
+		div.modal-content {
+		margin: 10rem auto;
+	}
+		`}
 `;
 
-const Modal = ({ children }) => {
+const Modal = ({ children, center, width, height }) => {
 	return (
-		<ModalWrapper>
+		<ModalWrapper center={center} width={width} height={height}>
 			<div className="modal-content">{children}</div>
 		</ModalWrapper>
 	);
