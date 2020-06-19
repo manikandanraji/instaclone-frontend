@@ -29,7 +29,7 @@ export const Wrapper = styled.div`
 		font-family: "Fira Sans", sans-serif;
 		font-size: 1rem;
 		border-radius: 4px;
-		border: 1px solid #dbdbdb;
+		border: 1px solid ${props => props.theme.borderColor};
 		width: 350px;
 	}
 
@@ -47,7 +47,7 @@ export const Wrapper = styled.div`
 	}
 
 	span {
-		color: #0095f6;
+		color: ${props => props.theme.blue};
 		cursor: pointer;
 	}
 

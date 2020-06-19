@@ -1,19 +1,21 @@
 import React from "react";
 import styled from "styled-components";
-import avatar from "../assets/avatar.jpg";
+import { useHistory } from 'react-router-dom';
 import Button from "../styles/Button";
 
 const Wrapper = styled.div`
 	display: flex;
 	align-items: center;
 	font-size: 1.1rem;
-	margin-bottom: 3rem;
+	margin-bottom: 2rem;
 
 	.avatar {
 		width: 160px;
 		height: 160px;
 		border-radius: 80px;
 		margin-right: 2rem;
+		position: relative;
+		top: 10px;
 	}
 
 	.profile-meta {
@@ -32,29 +34,31 @@ const Wrapper = styled.div`
 	}
 `;
 
-const ProfileHeader = () => {
+const ProfileHeader = ({ profile }) => {
+	const history = useHistory()
+
 	return (
 		<Wrapper>
-			<img className="avatar" src={avatar} alt="avatar" />
+			<img className="avatar" src={profile?.avatar} alt="avatar" />
 			<div className="profile-info">
 				<div className="profile-meta">
-					<h2>polygonrunaway</h2>
-					<Button>follow</Button>
+					<h2>{profile?.username}</h2>
+					{profile?.isMe ? (
+						<Button secondary onClick={() => history.push('/accounts/edit')}>Edit Profile</Button>
+					) : (
+						<Button>follow</Button>
+					)}
 				</div>
 				<div className="profile-stats">
-					<span>512 posts</span>
-					<span>126k followers</span>
-					<span>244 following</span>
+					<span>{profile?.postCount} posts</span>
+					<span>{profile?.followersCount} followers</span>
+					<span>{profile?.followingCount} following</span>
 				</div>
 				<div className="bio">
-					<span className="bold">Polygon Runaway</span>
-					<p>3D illustrator Follow to get inspired Learn 3D illustration</p>
-					<a
-						href="https://polygonrunaway.com"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						polygonrunaway.com
+					<span className="bold">{profile?.fullname}</span>
+					<p>{profile?.name}</p>
+					<a href={profile?.website} target="_blank" rel="noopener noreferrer">
+						{profile?.website}
 					</a>
 				</div>
 			</div>

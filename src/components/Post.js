@@ -5,13 +5,14 @@ import LikePost from "./LikePost";
 import SavePost from "./SavePost";
 import Comment from "./Comment";
 import useInput from "../hooks/useInput";
+import Avatar from "../styles/Avatar";
 import { addComment } from "../services/api";
 import { CommentIcon, InboxIcon } from "./Icons";
 
 export const PostWrapper = styled.div`
 	width: 615px;
-	background: #fff;
-	border: 1px solid #dbdbdb;
+	background: ${props => props.theme.white};
+	border: 1px solid ${props => props.theme.borderColor};
 	margin-bottom: 1.5rem;
 
 	.post-header {
@@ -20,11 +21,8 @@ export const PostWrapper = styled.div`
 		padding: 1rem;
 	}
 
-	.avatar {
-		width: 32px;
-		height: 32px;
-		border-radius: 16px;
-		margin-right: 1rem;
+	.post-header h3 {
+		cursor: pointer;
 	}
 
 	.post-img {
@@ -60,7 +58,7 @@ export const PostWrapper = styled.div`
 		height: 100%;
 		width: 100%;
 		border: none;
-		border-top: 1px solid #dbdbdb;
+		border-top: 1px solid ${props => props.theme.borderColor};
 		resize: none;
 		padding: 1rem 0 0 1rem;
 		font-size: 1rem;
@@ -94,8 +92,15 @@ const Post = ({ post }) => {
 	return (
 		<PostWrapper>
 			<div className="post-header">
-				<img className="avatar" src={post.user?.avatar} alt="avatar" />
-				<h3>{post.user?.username}</h3>
+				<Avatar
+					className="pointer"
+					src={post.user?.avatar}
+					alt="avatar"
+					onClick={() => history.push(`/${post.user?.username}`)}
+				/>
+				<h3 onClick={() => history.push(`/${post.user?.username}`)}>
+					{post.user?.username}
+				</h3>
 			</div>
 
 			<img

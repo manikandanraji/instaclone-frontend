@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Avatar from "../styles/Avatar";
 import { UserContext } from "../context/UserContext";
@@ -7,6 +8,9 @@ import { getUsers } from "../services/api";
 const Wrapper = styled.div`
 	width: 280px;
 	margin-top: 1rem;
+	position: fixed;
+	top: 6rem;
+	left: 64.5%;
 
 	.suggestions {
 		margin-top: 1.8rem;
@@ -29,13 +33,17 @@ const Wrapper = styled.div`
 	}
 
 	span {
-		color: #189FF6;
+		color: ${props => props.theme.blue};
 		font-weight: 500;
 		position
 	}
 
 	.suggestions div {
 		width: 230px;
+	}
+
+	@media screen and (max-width: 1095px) {
+		left: 67%;
 	}
 `;
 
@@ -45,19 +53,25 @@ const StyledUserCard = styled.div`
 	margin-bottom: 1rem;
 
 	span {
-		color: #b2b2b2;
+		color: ${props => props.theme.secondaryColor};
 	}
 `;
 
-const UserCard = ({ user }) => (
-	<StyledUserCard>
-		<Avatar lg src={user.avatar} alt="avatar" />
-		<div className="user-info">
-			<h3>{user.username}</h3>
-			<span>{user.fullname}</span>
-		</div>
-	</StyledUserCard>
-);
+const UserCard = ({ user }) => {
+	const history = useHistory();
+
+	return (
+		<StyledUserCard>
+			<Avatar className="pointer" onClick={() => history.push(`/${user.username}`)}lg src={user.avatar} alt="avatar" />
+			<div className="user-info">
+				<h3 className="pointer" onClick={() => history.push(`/${user.username}`)}>
+					{user.username}
+				</h3>
+				<span>{user.fullname}</span>
+			</div>
+		</StyledUserCard>
+	);
+};
 
 const Suggestions = () => {
 	const { user } = useContext(UserContext);

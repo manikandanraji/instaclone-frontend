@@ -16,8 +16,8 @@ const GlobalStyle = createGlobalStyle`
 		font-family: 'Fira Sans', sans-serif;
 		font-size: 1rem;
 		line-height: 1.7;
-		background: #FAFAFA;
-		color: #262626;
+		background: ${props => props.theme.bg};
+		color: ${props => props.theme.primaryColor};
 	}
 
 	h1, h2, h3, h4, h5, h6 {
@@ -26,7 +26,11 @@ const GlobalStyle = createGlobalStyle`
 
 	a {
 		text-decoration: none;
-		color: #0095F6;
+		color: ${props => props.theme.blue};
+		cursor: pointer;
+	}
+
+	.pointer {
 		cursor: pointer;
 	}
 

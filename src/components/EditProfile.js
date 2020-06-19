@@ -6,12 +6,12 @@ import ChangePassword from "./ChangePassword";
 const Wrapper = styled.div`
 	grid-template-columns: 240px 1fr;
 	width: 930px;
-	border: 1px solid #dbdbdb;
+	border: 1px solid ${props => props.theme.borderColor};
 	display: grid;
-	background: #fff;
+	background: ${props => props.theme.white};
 
 	.tabs {
-		border-right: 1px solid #dbdbdb;
+		border-right: 1px solid ${props => props.theme.borderColor};
 		padding: 1rem;
 	}
 

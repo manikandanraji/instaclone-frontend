@@ -57,6 +57,7 @@ export const deletePost = async ({ postId }) => {
 	return await api.delete(`/posts/${postId}`, { headers: { Authorization: `Bearer ${token}` } })
 }
 
-
-
-
+export const getProfile = async ({ username }) => {
+	const { token } = JSON.parse(localStorage.getItem('user'))
+	return await api.get(`/users/${username}`, { headers: { Authorization: `Bearer ${token}` } })
+}

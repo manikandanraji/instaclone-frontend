@@ -9,7 +9,7 @@ const Wrapper = styled.div`
 	justify-content: center;
 	width: 175px;
 	height: 200px;
-	border: 1px solid #dbdbdb;
+	border: 1px solid ${props => props.theme.borderColor};
 	border-radius: 4px;
 	margin-right: 1rem;
 	align-items: center;
@@ -23,7 +23,7 @@ const Wrapper = styled.div`
 
 	.fullname {
 		font-size: 0.9rem;
-		color: #9f98b4;
+		color: ${props => props.theme.secondaryColor};
 	}
 `;
 

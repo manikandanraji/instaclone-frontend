@@ -10,8 +10,8 @@ const NavWrapper = styled.div`
 	position: fixed;
 	top: 0;
 	width: 100%;
-	background-color: #fff;
-	border-bottom: 1px solid #dbdbdb;
+	background-color: ${props => props.theme.white};
+	border-bottom: 1px solid ${props => props.theme.borderColor};
 	padding: 1rem 0;
 	z-index: 10;
 
@@ -30,11 +30,12 @@ const NavWrapper = styled.div`
 
 	input {
 		padding: 0.4rem 0.6rem;
-		background: #fafafa;
-		border: 1px solid #dbdbdb;
+		background: ${props => props.theme.white};
+		background: ${props => props.theme.bg};
+		border: 1px solid ${props => props.theme.borderColor};
 		font-family: "Fira Sans", sans-serif;
 		font-size: 1rem;
-		border-radius: 4px;
+		border-radius: ${props => props.theme.borderRadius};
 	}
 
 	ul {
@@ -77,7 +78,7 @@ const Nav = () => {
 						<HeartIcon />
 					</li>
 					<li>
-						<Link to="/manikandanraji">
+						<Link to={`/${user.username}`}>
 							<img
 								style={{ width: "24px", height: "24px", borderRadius: "12px" }}
 								src={user.avatar}

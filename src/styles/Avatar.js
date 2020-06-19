@@ -7,9 +7,9 @@ const Avatar = styled.img`
 	margin-right: 1rem;
 
 	${props => props.lg && css`
-		width: 60px;
-		height: 60px;
-		border-radius: 30px;
+		width: 56px;
+		height: 56px;
+		border-radius: 28px;
 `}
 `;
 

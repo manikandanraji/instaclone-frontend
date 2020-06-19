@@ -13,7 +13,7 @@ const NewPostWrapper = styled.div`
 	}
 
 	.newpost-header h3:first-child {
-		color: #ed4956;
+		color: ${props => props.theme.red};
 	}
 
 	h3 {
@@ -21,7 +21,7 @@ const NewPostWrapper = styled.div`
 	}
 
 	.newpost-header h3:last-child {
-		color: #0095f6;
+		color: ${props => props.theme.blue};
 	}
 
 	textarea {

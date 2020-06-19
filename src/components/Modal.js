@@ -26,7 +26,7 @@ const ModalWrapper = styled.div`
 		width: 700px;
 		height: 500px;
 		margin: 5rem auto;
-		background: #fff;
+		background: ${props => props.theme.white};
 		border-radius: 4px;
 	}
 
@@ -38,7 +38,6 @@ const ModalWrapper = styled.div`
 `;
 
 const Modal = ({ children }) => {
-
 	return (
 		<ModalWrapper>
 			<div className="modal-content">{children}</div>

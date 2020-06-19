@@ -12,12 +12,12 @@ import { CommentIcon, InboxIcon } from "./Icons";
 const Wrapper = styled.div`
 	display: grid;
 	grid-template-columns: 60% 1fr;
-	border: 1px solid #dbdbdb;
+	border: 1px solid ${props => props.theme.borderColor};
 
 	.post-header {
 		display: flex;
 		align-items: center;
-		border-bottom: 1px solid #dbdbdb;
+		border-bottom: 1px solid ${props => props.theme.borderColor};
 		padding: 1rem;
 	}
 
@@ -42,7 +42,7 @@ const Wrapper = styled.div`
 	}
 
 	.comments {
-		border-bottom: 1px solid #dbdbdb;
+		border-bottom: 1px solid ${props => props.theme.borderColor};
 		padding: 1rem;
 		height: 330px;
 		overflow-y: scroll;
@@ -61,9 +61,9 @@ const Wrapper = styled.div`
 	textarea {
 		height: 100%;
 		width: 100%;
-		background: #fafafa;
+		background: ${props => props.theme.bg};
 		border: none;
-		border-top: 1px solid #dbdbdb;
+		border-top: 1px solid ${props => props.theme.borderColor};
 		resize: none;
 		padding: 1rem 0 0 1rem;
 		font-size: 1rem;

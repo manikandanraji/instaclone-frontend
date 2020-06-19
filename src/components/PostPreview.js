@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { HeartIcon, CommentIcon } from "./Icons";
 
@@ -6,13 +7,13 @@ const Wrapper = styled.div`
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	grid-gap: 1.5rem;
-	margin-top: 3rem;
+	margin-top: 1rem;
 	cursor: pointer;
 
 	img {
 		width: 295px;
 		height: 290px;
-		object-fit: "cover";
+		object-fit: cover;
 		border-radius: 4px;
 		box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
 	}
@@ -44,13 +45,13 @@ const Wrapper = styled.div`
 		justify-content: center;
 		align-items: center;
 		height: 100%;
-		color: #fff;
+		color: ${props => props.theme.white};
 		font-weight: 500;
 		font-size: 1.1rem;
 	}
 
 	svg {
-		fill: #fff;
+		fill: ${props => props.theme.white};
 		position: relative;
 		top: 4px;
 	}
@@ -64,20 +65,25 @@ const Wrapper = styled.div`
 	}
 `;
 
-const ProfilePreview = () => {
-	const posts = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const ProfilePreview = ({ posts }) => {
+	const history = useHistory();
+
 	return (
 		<Wrapper>
-			{posts.map(post => (
-				<div className="container-overlay">
-					<img key={post} src="https://source.unsplash.com/random" alt="post" />
-					<div class="overlay">
+			{posts?.map(post => (
+				<div
+					key={post._id}
+					className="container-overlay"
+					onClick={() => history.push(`/p/${post._id}`)}
+				>
+					<img src={post.files[0]} alt="post" />
+					<div className="overlay">
 						<div className="overlay-content">
 							<span>
-								<HeartIcon /> 12k
+								<HeartIcon /> {post.likesCount}
 							</span>
 							<span>
-								<CommentIcon /> 10
+								<CommentIcon /> {post.commentsCount}
 							</span>
 						</div>
 					</div>

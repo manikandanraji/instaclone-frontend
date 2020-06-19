@@ -11,6 +11,7 @@ const CommentWrapper = styled.div`
 `;
 
 const Comment = ({ comment, hideavatar }) => {
+
 	return (
 		<CommentWrapper style={{ padding: !hideavatar ? "0.4rem 0" : "" }}>
 			{!hideavatar && <Avatar src={comment.user?.avatar} alt="avatar" />}
