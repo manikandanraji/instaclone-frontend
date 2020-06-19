@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import NewPost from "./NewPost";
 import { UserContext } from "../context/UserContext";
 import navlogo from "../assets/navlogo.png";
-import { HomeIcon, InboxIcon, ExploreIcon, HeartIcon } from "./Icons";
+import { HomeIcon, ExploreIcon, HeartIcon } from "./Icons";
 
 const NavWrapper = styled.div`
 	position: fixed;
@@ -50,6 +51,7 @@ const NavWrapper = styled.div`
 
 const Nav = () => {
 	const { user } = useContext(UserContext);
+
 	return (
 		<NavWrapper>
 			<nav>
@@ -64,7 +66,7 @@ const Nav = () => {
 						</Link>
 					</li>
 					<li>
-						<InboxIcon />
+						<NewPost />
 					</li>
 					<li>
 						<Link to="/explore">

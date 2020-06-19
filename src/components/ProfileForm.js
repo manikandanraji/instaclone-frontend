@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import Button from "../styles/Button";
 import Avatar from "../styles/Avatar";
 import useInput from "../hooks/useInput";
 import { UserContext } from "../context/UserContext";
-import { editProfile } from '../services/api';
+import { editProfile, uploadImage } from '../services/api';
 
 export const Wrapper = styled.div`
 	padding: 1rem;
@@ -60,12 +60,22 @@ export const Wrapper = styled.div`
 
 const ProfileForm = () => {
 	const { user, setUser } = useContext(UserContext);
+	const [newAvatar, setNewAvatar] = useState('')
 
 	const fullname = useInput(user.fullname);
 	const username = useInput(user.username);
-	const bio = useInput(username.bio);
+	const bio = useInput(user.bio);
 	const website = useInput(user.website);
 	const email = useInput(user.email);
+
+	const handleImageUpload = e => {
+		const file = e.target.files[0]
+		const data = new FormData()
+		data.append('file', file)
+		data.append('upload_preset', 'instaclone')
+
+		uploadImage({ body: data }).then(res => setNewAvatar(res.data.secure_url)).catch(err => console.log(err))
+	}
 
 	const handleEditProfile = e => {
 		e.preventDefault();
@@ -75,10 +85,12 @@ const ProfileForm = () => {
 			username: username.value,
 			bio: bio.value,
 			website: website.value,
-			email: email.value
+			email: email.value,
+			avatar: newAvatar || user.avatar
 		};
 
 		editProfile({ body }).then(res => {
+			console.log('submitted')
 			res.data.data.token = user.token;
 
 			// update the user context and localstorage
@@ -94,16 +106,16 @@ const ProfileForm = () => {
 				<div className="input-group change-avatar">
 					<div>
 						<label htmlFor="change-avatar">
-							<Avatar lg src={user.avatar} alt="avatar" />
+							<Avatar lg src={newAvatar ? newAvatar : user.avatar} alt="avatar" />
 						</label>
-						<input id="change-avatar" type="file" />
+						<input id="change-avatar" accept="image/*" type="file" onChange={handleImageUpload}/>
 					</div>
 					<div className="change-avatar-meta">
 						<h2>{user.username}</h2>
 						<label htmlFor="change-avatar-link">
 							<span>Change Profile Photo</span>
 						</label>
-						<input id="change-avatar-link" type="file" />
+						<input id="change-avatar-link" accept="image/*" type="file" onChange={handleImageUpload}/>
 					</div>
 				</div>
 

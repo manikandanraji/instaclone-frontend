@@ -42,3 +42,21 @@ export const editProfile = async ({ body }) => {
 	const { token } = JSON.parse(localStorage.getItem('user'))
 	return await api.put(`/users`, body, { headers: { Authorization: `Bearer ${token}` } })
 }
+
+export const uploadImage = async ({ body }) => {
+	return await axios.post('https://api.cloudinary.com/v1_1/douy56nkf/upload', body)
+}
+
+export const createPost = async ({ body }) => {
+	const { token } = JSON.parse(localStorage.getItem('user'))
+	return await api.post(`/posts`, body, { headers: { Authorization: `Bearer ${token}` } })
+}
+
+export const deletePost = async ({ postId }) => {
+	const { token } = JSON.parse(localStorage.getItem('user'))
+	return await api.delete(`/posts/${postId}`, { headers: { Authorization: `Bearer ${token}` } })
+}
+
+
+
+

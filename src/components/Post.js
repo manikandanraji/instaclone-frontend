@@ -71,6 +71,7 @@ export const PostWrapper = styled.div`
 const Post = ({ post }) => {
 	const comment = useInput("");
 	const history = useHistory();
+
 	const [commentsState, setComments] = useState(post.comments);
 	const [likesState, setLikes] = useState(post.likesCount);
 

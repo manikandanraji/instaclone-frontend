@@ -134,7 +134,12 @@ const DetailedPost = () => {
 						<InboxIcon />
 						<SavePost isSaved={post?.isSaved} postId={post?._id} />
 					</div>
-					<span className="bold">{likesState} likes</span>
+
+					{likesState !== 0 && (
+						<span className="likes bold">
+							{likesState} {likesState > 1 ? "likes" : "like"}
+						</span>
+					)}
 				</div>
 
 				<div className="add-comment">

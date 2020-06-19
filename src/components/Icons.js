@@ -12,8 +12,9 @@ export const HomeIcon = () => (
 	</svg>
 );
 
-export const InboxIcon = () => (
+export const InboxIcon = props => (
 	<svg
+		{...props}
 		aria-label="Direct"
 		fill="#262626"
 		height="22"
@@ -106,5 +107,38 @@ export const FilledBookmarkIcon = props => (
 		width="24"
 	>
 		<path d="M43.5 48c-.4 0-.8-.2-1.1-.4L24 28.9 5.6 47.6c-.4.4-1.1.6-1.6.3-.6-.2-1-.8-1-1.4v-45C3 .7 3.7 0 4.5 0h39c.8 0 1.5.7 1.5 1.5v45c0 .6-.4 1.2-.9 1.4-.2.1-.4.1-.6.1z"></path>
+	</svg>
+);
+
+export const MoreIcon = props => (
+	<svg
+		{...props}
+		aria-label="More options"
+		fill="#262626"
+		height="16"
+		viewBox="0 0 48 48"
+		width="16"
+	>
+		<circle
+			clipRule="evenodd"
+			cx="8"
+			cy="24"
+			fillRule="evenodd"
+			r="4.5"
+		></circle>
+		<circle
+			clipRule="evenodd"
+			cx="24"
+			cy="24"
+			fillRule="evenodd"
+			r="4.5"
+		></circle>
+		<circle
+			clipRule="evenodd"
+			cx="40"
+			cy="24"
+			fillRule="evenodd"
+			r="4.5"
+		></circle>
 	</svg>
 );
