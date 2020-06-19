@@ -1,23 +1,25 @@
-import React from 'react'
-import styled from 'styled-components'
-import avatar from "../assets/avatar.jpg"
+import React from "react";
+import styled from "styled-components";
 import Avatar from "../styles/Avatar";
 
 const CommentWrapper = styled.div`
 	display: flex;
-	margin-bottom: 0.5rem;
-`
 
-const Comment = ({ comment }) => {
+	span {
+		padding-right: 0.4rem;
+	}
+`;
+
+const Comment = ({ comment, hideavatar }) => {
 	return (
-		<CommentWrapper>
-			<Avatar src={avatar} alt="avatar" />
-			<div className="class-info">
-				<span className="bold">{comment.username}</span>
-				<p>{comment.text}</p>
-			</div>
+		<CommentWrapper style={{ padding: !hideavatar ? "0.4rem 0" : "" }}>
+			{!hideavatar && <Avatar src={comment.user?.avatar} alt="avatar" />}
+			<p>
+				<span className="bold">{comment.user && comment.user.username}</span>
+				{comment.text}
+			</p>
 		</CommentWrapper>
-	)
-}
+	);
+};
 
 export default Comment;

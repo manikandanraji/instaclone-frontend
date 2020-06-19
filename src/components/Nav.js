@@ -1,13 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { UserContext } from "../context/UserContext";
 import navlogo from "../assets/navlogo.png";
-import {
-	HomeIcon,
-	InboxIcon,
-	ExploreIcon,
-	HeartIcon,
-	DefaultAvatar
-} from "./Icons";
+import { HomeIcon, InboxIcon, ExploreIcon, HeartIcon } from "./Icons";
 
 const NavWrapper = styled.div`
 	position: fixed;
@@ -20,7 +16,7 @@ const NavWrapper = styled.div`
 
 	.nav-logo {
 		position: relative;
-		top: 2px;
+		top: 6px;
 	}
 
 	nav {
@@ -42,6 +38,8 @@ const NavWrapper = styled.div`
 
 	ul {
 		display: flex;
+		position: relative;
+		top: 3px;
 		list-style-type: none;
 	}
 
@@ -51,26 +49,39 @@ const NavWrapper = styled.div`
 `;
 
 const Nav = () => {
+	const { user } = useContext(UserContext);
 	return (
 		<NavWrapper>
 			<nav>
-				<img className="nav-logo" src={navlogo} alt="logo" />
+				<Link to="/">
+					<img className="nav-logo" src={navlogo} alt="logo" />
+				</Link>
 				<input type="text" placeholder="Search" />
 				<ul>
 					<li>
-						<HomeIcon />
+						<Link to="/">
+							<HomeIcon />
+						</Link>
 					</li>
 					<li>
 						<InboxIcon />
 					</li>
 					<li>
-						<ExploreIcon />
+						<Link to="/explore">
+							<ExploreIcon />
+						</Link>
 					</li>
 					<li>
 						<HeartIcon />
 					</li>
 					<li>
-						<DefaultAvatar />
+						<Link to="/manikandanraji">
+							<img
+								style={{ width: "24px", height: "24px", borderRadius: "12px" }}
+								src={user.avatar}
+								alt="avatar"
+							/>
+						</Link>
 					</li>
 				</ul>
 			</nav>

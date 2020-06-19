@@ -1,24 +1,16 @@
-import React from "react";
-// import styled from "styled-components";
+import React, { useContext } from "react";
 import GlobalStyle from "./styles/GlobalStyle";
-// import Login from './components/Login';
-// import Signup from "./components/Signup";
-import Container from "./styles/Container";
-import Nav from "./components/Nav";
-import EditProfile from "./components/EditProfile";
-// import Profile from "./components/Profile";
-// import DetailedPost from "./components/DetailedPost";
-// import Post from "./components/Post";
-// import ProfilePreview from "./components/ProfilePreview";
+import Auth from "./components/Auth";
+import Routing from './Routing';
+import { UserContext } from './context/UserContext'
 
 const App = () => {
+	const { user } = useContext(UserContext)
+
 	return (
 		<>
 			<GlobalStyle />
-			<Nav />
-			<Container>
-				<EditProfile />
-			</Container>
+			{ user ? <Routing /> : <Auth /> }
 		</>
 	);
 };

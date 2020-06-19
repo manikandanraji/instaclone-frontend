@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
-import avatar from "../assets/avatar.jpg";
 import Button from "../styles/Button";
 import Avatar from "../styles/Avatar";
+import useInput from "../hooks/useInput";
+import { UserContext } from "../context/UserContext";
+import { editProfile } from '../services/api';
 
 export const Wrapper = styled.div`
 	padding: 1rem;
@@ -39,7 +41,8 @@ export const Wrapper = styled.div`
 		display: flex;
 	}
 
-	input[id="change-avatar"] {
+	input[id="change-avatar"],
+	input[id="change-avatar-link"] {
 		display: none;
 	}
 
@@ -56,58 +59,95 @@ export const Wrapper = styled.div`
 `;
 
 const ProfileForm = () => {
+	const { user, setUser } = useContext(UserContext);
+
+	const fullname = useInput(user.fullname);
+	const username = useInput(user.username);
+	const bio = useInput(username.bio);
+	const website = useInput(user.website);
+	const email = useInput(user.email);
+
+	const handleEditProfile = e => {
+		e.preventDefault();
+
+		const body = {
+			fullname: fullname.value,
+			username: username.value,
+			bio: bio.value,
+			website: website.value,
+			email: email.value
+		};
+
+		editProfile({ body }).then(res => {
+			res.data.data.token = user.token;
+
+			// update the user context and localstorage
+			setUser(res.data.data)
+			localStorage.setItem('user', JSON.stringify(res.data.data))
+		})
+
+	};
+
 	return (
 		<Wrapper>
-			<form>
+			<form onSubmit={handleEditProfile}>
 				<div className="input-group change-avatar">
 					<div>
 						<label htmlFor="change-avatar">
-							<Avatar lg src={avatar} alt="avatar" />
+							<Avatar lg src={user.avatar} alt="avatar" />
 						</label>
 						<input id="change-avatar" type="file" />
 					</div>
-					<div class="change-avatar-meta">
-						<h2>kickbuttowski248</h2>
-						<label htmlFor="change-avatar">
+					<div className="change-avatar-meta">
+						<h2>{user.username}</h2>
+						<label htmlFor="change-avatar-link">
 							<span>Change Profile Photo</span>
 						</label>
-						<input id="change-avatar" type="file" />
+						<input id="change-avatar-link" type="file" />
 					</div>
 				</div>
 
 				<div className="input-group">
-					<label className="bold" htmlFor="name">
-						Name
-					</label>
-					<input type="text" value="Kick Buttowski" />
+					<label className="bold">Name</label>
+					<input
+						type="text"
+						value={fullname.value}
+						onChange={fullname.onChange}
+					/>
 				</div>
+
 				<div className="input-group">
-					<label className="bold" htmlFor="username">
-						Username
-					</label>
-					<input type="text" value="kickbuttowski248" />
+					<label className="bold">Username</label>
+					<input
+						type="text"
+						value={username.value}
+						onChange={username.onChange}
+					/>
 				</div>
+
 				<div className="input-group">
-					<label className="bold" htmlFor="website">
-						Website
-					</label>
-					<input type="text" value="https://github.com/manikandanraji" />
+					<label className="bold">Website</label>
+					<input
+						type="text"
+						value={website.value}
+						onChange={website.onChange}
+					/>
 				</div>
+
 				<div className="input-group textarea-group">
-					<label className="bold" htmlFor="bio">
-						Bio
-					</label>
+					<label className="bold">Bio</label>
 					<textarea
 						cols="10"
-						value="Former Assassin, killed a guy with an pencil"
+						value={bio.value}
+						onChange={bio.onChange}
 					></textarea>
 				</div>
+
 				<div className="input-group">
-					<label className="bold" htmlFor="email">
-						Email
-					</label>
-					<input type="email" value="manikandan4871113@gmail.com" />
+					<label className="bold">Email</label>
+					<input type="email" value={email.value} onChange={email.onChange} />
 				</div>
+
 				<Button>Submit</Button>
 			</form>
 		</Wrapper>

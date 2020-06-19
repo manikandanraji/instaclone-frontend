@@ -27,6 +27,11 @@ const GlobalStyle = createGlobalStyle`
 	a {
 		text-decoration: none;
 		color: #0095F6;
+		cursor: pointer;
+	}
+
+	button, svg {
+	  cursor: pointer;
 	}
 
 	.bold {

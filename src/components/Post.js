@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import avatar from "../assets/avatar.jpg";
-import { HeartIcon, CommentIcon, InboxIcon, BookmarkIcon } from "./Icons";
+import { useHistory } from "react-router-dom";
+import LikePost from "./LikePost";
+import SavePost from "./SavePost";
+import Comment from "./Comment";
+import useInput from "../hooks/useInput";
+import { addComment } from "../services/api";
+import { CommentIcon, InboxIcon } from "./Icons";
 
 export const PostWrapper = styled.div`
-	margin: 1rem 0;
 	width: 615px;
 	background: #fff;
 	border: 1px solid #dbdbdb;
+	margin-bottom: 1.5rem;
 
 	.post-header {
 		display: flex;
@@ -44,6 +49,7 @@ export const PostWrapper = styled.div`
 
 	.likes-caption-comments {
 		padding: 1rem;
+		padding-top: 0.3rem;
 	}
 
 	.username {
@@ -62,49 +68,78 @@ export const PostWrapper = styled.div`
 	}
 `;
 
-const Post = () => {
-	const comments = [
-		{ user: "wesbos", text: "that looks slick mate, well done" },
-		{ user: "scotttolinksi", text: "woah, the layout is so fluid " },
-		{
-			user: "bradtraversy",
-			text: "that looks slick mate, well done some meaningful comment"
+const Post = ({ post }) => {
+	const comment = useInput("");
+	const history = useHistory();
+	const [commentsState, setComments] = useState(post.comments);
+	const [likesState, setLikes] = useState(post.likesCount);
+
+	const incLikes = () => setLikes(likesState + 1);
+	const decLikes = () => setLikes(likesState - 1);
+
+	const handleAddComment = e => {
+		if (e.keyCode === 13) {
+			e.preventDefault();
+
+			addComment({
+				postId: post._id,
+				body: { text: comment.value }
+			}).then(resp => setComments([...commentsState, resp.data.data]));
+
+			comment.setValue("");
 		}
-	];
+	};
 
 	return (
 		<PostWrapper>
 			<div className="post-header">
-				<img className="avatar" src={avatar} alt="avatar" />
-				<h3>polygonrunaway</h3>
+				<img className="avatar" src={post.user?.avatar} alt="avatar" />
+				<h3>{post.user?.username}</h3>
 			</div>
 
 			<img
 				className="post-img"
-				src="https://res.cloudinary.com/douy56nkf/image/upload/v1591743903/twitter-build/iazrxlak5fajg3ihyuog.png"
+				src={post.files?.length && post.files[0]}
 				alt="post-img"
 			/>
 
 			<div className="post-actions">
-				<HeartIcon />
-				<CommentIcon />
+				<LikePost
+					isLiked={post.isLiked}
+					postId={post._id}
+					incLikes={incLikes}
+					decLikes={decLikes}
+				/>
+				<CommentIcon onClick={() => history.push(`/p/${post._id}`)} />
 				<InboxIcon />
-				<BookmarkIcon />
+				<SavePost isSaved={post.isSaved} postId={post._id} />
 			</div>
 
-			<div class="likes-caption-comments">
-				<span class="likes bold">19, 343 likes</span>
+			<div className="likes-caption-comments">
+				{likesState !== 0 && (
+					<span className="likes bold">
+						{likesState} {likesState > 1 ? "likes" : "like"}
+					</span>
+				)}
 
-				{comments.map(comment => (
-					<p>
-						<span class="username bold">{comment.user}</span>
-						{comment.text}
-					</p>
+				<p>
+					<span className="username bold">{post.user?.username}</span>
+					{post.caption}
+				</p>
+
+				{commentsState.map(comment => (
+					<Comment key={comment._id} hideavatar={true} comment={comment} />
 				))}
 			</div>
 
 			<div className="add-comment">
-				<textarea columns="3" placeholder="Add a Comment"></textarea>
+				<textarea
+					columns="3"
+					placeholder="Add a Comment"
+					value={comment.value}
+					onChange={comment.onChange}
+					onKeyDown={handleAddComment}
+				></textarea>
 			</div>
 		</PostWrapper>
 	);
