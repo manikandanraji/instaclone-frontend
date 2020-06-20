@@ -18,6 +18,7 @@ const ModalContentWrapper = styled.div`
 
 	span:last-child {
 		color: inherit;
+		border: none;
 	}
 
 	span {

@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import NewPost from "./NewPost";
+import Search from "./Search";
 import { UserContext } from "../context/UserContext";
 import navlogo from "../assets/navlogo.png";
 import { HomeIcon, ExploreIcon, HeartIcon } from "./Icons";
@@ -28,16 +29,6 @@ const NavWrapper = styled.div`
 		width: 930px;
 	}
 
-	input {
-		padding: 0.4rem 0.6rem;
-		background: ${props => props.theme.white};
-		background: ${props => props.theme.bg};
-		border: 1px solid ${props => props.theme.borderColor};
-		font-family: "Fira Sans", sans-serif;
-		font-size: 1rem;
-		border-radius: ${props => props.theme.borderRadius};
-	}
-
 	ul {
 		display: flex;
 		position: relative;
@@ -59,7 +50,7 @@ const Nav = () => {
 				<Link to="/">
 					<img className="nav-logo" src={navlogo} alt="logo" />
 				</Link>
-				<input type="text" placeholder="Search" />
+				<Search />
 				<ul>
 					<li>
 						<Link to="/">

@@ -61,7 +61,10 @@ const Wrapper = styled.div`
 		display: block;
 		align-items: center;
 		padding-right: 0.5rem;
-		margin-right: 2rem;
+	}
+
+	span:first-child {
+		margin-right: 1rem;
 	}
 `;
 

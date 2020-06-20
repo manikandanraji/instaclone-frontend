@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
+import Follow from "./Follow";
 import Avatar from "../styles/Avatar";
 import { UserContext } from "../context/UserContext";
 import { getUsers } from "../services/api";
@@ -14,6 +15,10 @@ const Wrapper = styled.div`
 
 	.suggestions {
 		margin-top: 1.8rem;
+	}
+
+	.suggestions div {
+		width: 230px;
 	}
 
 	.suggestions > h3 {
@@ -32,14 +37,14 @@ const Wrapper = styled.div`
 		border-radius: 22px;
 	}
 
+	.follow {
+		position: relative;
+		top: -0.3rem;
+	}
+
 	span {
 		color: ${props => props.theme.blue};
 		font-weight: 500;
-		position
-	}
-
-	.suggestions div {
-		width: 230px;
 	}
 
 	@media screen and (max-width: 1095px) {
@@ -62,9 +67,18 @@ const UserCard = ({ user }) => {
 
 	return (
 		<StyledUserCard>
-			<Avatar className="pointer" onClick={() => history.push(`/${user.username}`)}lg src={user.avatar} alt="avatar" />
+			<Avatar
+				className="pointer"
+				onClick={() => history.push(`/${user.username}`)}
+				lg
+				src={user.avatar}
+				alt="avatar"
+			/>
 			<div className="user-info">
-				<h3 className="pointer" onClick={() => history.push(`/${user.username}`)}>
+				<h3
+					className="pointer"
+					onClick={() => history.push(`/${user.username}`)}
+				>
 					{user.username}
 				</h3>
 				<span>{user.fullname}</span>
@@ -90,7 +104,7 @@ const Suggestions = () => {
 				{users.map(user => (
 					<div key={user.username} className="suggestions-usercard">
 						<UserCard user={user} />
-						<span>Follow</span>
+						<Follow nobtn isFollowing={user.isFollowing} userId={user._id}/>
 					</div>
 				))}
 			</div>

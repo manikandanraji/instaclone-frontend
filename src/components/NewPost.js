@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import Modal from "./Modal";
 import useInput from "../hooks/useInput";
+import { FeedContext } from "../context/FeedContext";
 import { uploadImage, createPost } from "../services/api";
 import { InboxIcon } from "./Icons";
 
@@ -36,6 +37,7 @@ const NewPostWrapper = styled.div`
 `;
 
 const NewPost = () => {
+	const { feed, setFeed } = useContext(FeedContext);
 	const caption = useInput("");
 	const [showModal, setShowModal] = useState(false);
 	const [preview, setPreview] = useState("");
@@ -66,6 +68,8 @@ const NewPost = () => {
 	};
 
 	const handleSubmitPost = () => {
+		setShowModal(false);
+
 		const tags = caption.value
 			.split(" ")
 			.filter(caption => caption.startsWith("#"));
@@ -83,9 +87,11 @@ const NewPost = () => {
 
 		createPost({ body: newPost })
 			.then(res => {
-				console.log(res.data);
-				setShowModal(false);
-				window.location = "/";
+				const post = res.data.data;
+				post.isLiked = false;
+				post.isSaved = false;
+				post.isMine = true;
+				setFeed([post, ...feed]);
 			})
 			.catch(err => console.log(err));
 	};

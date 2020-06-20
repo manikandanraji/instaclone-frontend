@@ -11,12 +11,20 @@ const Button = styled.button`
 	font-family: "Fira Sans", sans-serif;
 	font-size: 1rem;
 
-	${props => props.secondary && css`
-		background: none;
-		color: #242424;
-		border: 1px solid #DBDBDB;
-		font-weight: 500;
-`}
+	${props =>
+		props.secondary &&
+		css`
+			background: none;
+			color: #242424;
+			border: 1px solid #dbdbdb;
+			font-weight: 500;
+		`}
+
+	${props =>
+		props.sm &&
+		css`
+			padding: 0.4rem 0.6rem;
+		`}
 `;
 
 export default Button;

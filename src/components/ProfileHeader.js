@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import { useHistory } from 'react-router-dom';
-import Follow from "../components/Follow";
+import { useHistory } from "react-router-dom";
+import Follow from "./Follow";
 import Button from "../styles/Button";
+import { UserContext } from '../context/UserContext';
+import { OptionsIcon } from "./Icons";
 
 const Wrapper = styled.div`
 	display: flex;
@@ -30,19 +32,31 @@ const Wrapper = styled.div`
 		margin-bottom: 1rem;
 	}
 
+	.options svg {
+		position: relative;
+		top: 7px;
+		margin-left: 1rem;
+	}
+
 	span {
 		padding-right: 1rem;
 	}
 `;
 
 const ProfileHeader = ({ profile }) => {
-	const history = useHistory()
-	const [followersState, setFollowers] = useState(0)
+	const history = useHistory();
+	const { setUser } = useContext(UserContext)
+	const [followersState, setFollowers] = useState(0);
 
-	const incFollowers = () => setFollowers(followersState + 1)
-	const decFollowers = () => setFollowers(followersState - 1)
+	const incFollowers = () => setFollowers(followersState + 1);
+	const decFollowers = () => setFollowers(followersState - 1);
 
-	useEffect(() => setFollowers(profile?.followersCount), [profile])
+	const handleLogout = () => {
+		setUser(null)
+		localStorage.removeItem('user');
+	}
+
+	useEffect(() => setFollowers(profile?.followersCount), [profile]);
 
 	return (
 		<Wrapper>
@@ -51,9 +65,19 @@ const ProfileHeader = ({ profile }) => {
 				<div className="profile-meta">
 					<h2>{profile?.username}</h2>
 					{profile?.isMe ? (
-						<Button secondary onClick={() => history.push('/accounts/edit')}>Edit Profile</Button>
+						<div className="options">
+							<Button secondary onClick={() => history.push("/accounts/edit")}>
+								Edit Profile
+							</Button>
+							<OptionsIcon onClick={handleLogout} />
+						</div>
 					) : (
-						<Follow isFollowing={profile?.isFollowing} incFollowers={incFollowers} decFollowers={decFollowers} userId={profile?._id}/>
+						<Follow
+							isFollowing={profile?.isFollowing}
+							incFollowers={incFollowers}
+							decFollowers={decFollowers}
+							userId={profile?._id}
+						/>
 					)}
 				</div>
 				<div className="profile-stats">

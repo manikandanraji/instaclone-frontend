@@ -9,8 +9,15 @@ export const authenticate = async ({ url, body }) => await api.post(url, body);
 export const me = async ({ url, token }) =>
 	await api.get(url, { headers: { Authorization: `Bearer ${token}` } });
 
-export const getUsers = async () => await api.get('/users')
+export const getUsers = async () => {
+	const { token } = JSON.parse(localStorage.getItem('user'))
 
+	return await api.get('/users', { headers: { Authorization: `Bearer ${token}` } })
+}
+
+export const getPosts = async () => {
+	return await api.get('/posts')
+}
 
 export const getFeed = async () => {
 	const { token } = JSON.parse(localStorage.getItem('user'))
