@@ -39,6 +39,18 @@ const NavWrapper = styled.div`
 	li {
 		margin-left: 1rem;
 	}
+
+	@media screen and (max-width: 970px) {
+		nav {
+			width: 90%;
+		}
+	}
+
+	@media screen and (max-width: 670px) {
+		input {
+			display: none;
+	}
+	}
 `;
 
 const Nav = () => {

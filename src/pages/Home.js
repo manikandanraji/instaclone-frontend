@@ -1,8 +1,17 @@
 import React, { useContext, useEffect } from "react";
+import styled from "styled-components";
 import Suggestions from "../components/Suggestions";
 import Post from "../components/Post";
 import { FeedContext } from "../context/FeedContext";
 import { getFeed } from "../services/api";
+
+const Wrapper = styled.div`
+	@media screen and (max-width: 1040px) {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+`;
 
 const Home = () => {
 	const { feed, setFeed } = useContext(FeedContext);
@@ -12,14 +21,14 @@ const Home = () => {
 	}, [setFeed]);
 
 	return (
-		<>
-			<div>
+		<Wrapper>
+			<div className="home">
 				{feed.map(post => (
 					<Post key={post._id} post={post} />
 				))}
 			</div>
 			<Suggestions />
-		</>
+		</Wrapper>
 	);
 };
 

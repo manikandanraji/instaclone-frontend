@@ -110,6 +110,10 @@ export const PostWrapper = styled.div`
 		font-size: 1rem;
 		font-family: "Fira Sans", sans-serif;
 	}
+
+	@media screen and (max-width: 690px) {
+		width: 99%;
+	}
 `;
 
 const Post = ({ post }) => {

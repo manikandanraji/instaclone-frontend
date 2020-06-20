@@ -50,6 +50,10 @@ const Wrapper = styled.div`
 	@media screen and (max-width: 1095px) {
 		left: 67%;
 	}
+
+	@media screen and (max-width: 1040px) {
+		display: none;
+	}
 `;
 
 const StyledUserCard = styled.div`
@@ -62,7 +66,7 @@ const StyledUserCard = styled.div`
 	}
 `;
 
-const UserCard = ({ user }) => {
+export const UserCard = ({ user }) => {
 	const history = useHistory();
 
 	return (
@@ -74,6 +78,7 @@ const UserCard = ({ user }) => {
 				src={user.avatar}
 				alt="avatar"
 			/>
+
 			<div className="user-info">
 				<h3
 					className="pointer"
@@ -104,7 +109,7 @@ const Suggestions = () => {
 				{users.map(user => (
 					<div key={user.username} className="suggestions-usercard">
 						<UserCard user={user} />
-						<Follow nobtn isFollowing={user.isFollowing} userId={user._id}/>
+						<Follow nobtn isFollowing={user.isFollowing} userId={user._id} />
 					</div>
 				))}
 			</div>

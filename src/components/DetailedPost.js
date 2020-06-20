@@ -12,7 +12,10 @@ import { CommentIcon, InboxIcon } from "./Icons";
 const Wrapper = styled.div`
 	display: grid;
 	grid-template-columns: 60% 1fr;
-	border: 1px solid ${props => props.theme.borderColor};
+
+	.post-info {
+		border: 1px solid ${props => props.theme.borderColor};
+	}
 
 	.post-header {
 		display: flex;
@@ -69,6 +72,15 @@ const Wrapper = styled.div`
 		font-size: 1rem;
 		font-family: "Fira Sans", sans-serif;
 	}
+
+	@media screen and (max-width: 840px) {
+		display: flex;
+		flex-direction: column;
+
+		.comments {
+			height: 100%;
+		}
+	}
 `;
 
 const DetailedPost = () => {
@@ -110,6 +122,7 @@ const DetailedPost = () => {
 				src={post.files?.length && post.files[0]}
 				alt="post"
 			/>
+
 			<div className="post-info">
 				<div className="post-header">
 					<Avatar className="avatar" src={post.user?.avatar} alt="avatar" />

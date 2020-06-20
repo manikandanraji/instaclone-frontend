@@ -4,7 +4,7 @@ import Button from "../styles/Button";
 import Avatar from "../styles/Avatar";
 import useInput from "../hooks/useInput";
 import { UserContext } from "../context/UserContext";
-import { editProfile, uploadImage } from '../services/api';
+import { editProfile, uploadImage } from "../services/api";
 
 export const Wrapper = styled.div`
 	padding: 1rem;
@@ -56,11 +56,29 @@ export const Wrapper = styled.div`
 		margin-left: 6.25rem;
 		margin-bottom: 1rem;
 	}
+
+	@media screen and (max-width: 550px) {
+		width: 98%;
+
+		.input-group {
+			display: flex;
+			flex-direction: column;
+		}
+
+		label {
+			padding-bottom: 0.5rem;
+			font-size: 1rem;
+		}
+
+		button {
+			margin-left: 0;
+		}
+	}
 `;
 
 const ProfileForm = () => {
 	const { user, setUser } = useContext(UserContext);
-	const [newAvatar, setNewAvatar] = useState('')
+	const [newAvatar, setNewAvatar] = useState("");
 
 	const fullname = useInput(user.fullname);
 	const username = useInput(user.username);
@@ -69,13 +87,15 @@ const ProfileForm = () => {
 	const email = useInput(user.email);
 
 	const handleImageUpload = e => {
-		const file = e.target.files[0]
-		const data = new FormData()
-		data.append('file', file)
-		data.append('upload_preset', 'instaclone')
+		const file = e.target.files[0];
+		const data = new FormData();
+		data.append("file", file);
+		data.append("upload_preset", "instaclone");
 
-		uploadImage({ body: data }).then(res => setNewAvatar(res.data.secure_url)).catch(err => console.log(err))
-	}
+		uploadImage({ body: data })
+			.then(res => setNewAvatar(res.data.secure_url))
+			.catch(err => console.log(err));
+	};
 
 	const handleEditProfile = e => {
 		e.preventDefault();
@@ -90,14 +110,13 @@ const ProfileForm = () => {
 		};
 
 		editProfile({ body }).then(res => {
-			console.log('submitted')
+			console.log("submitted");
 			res.data.data.token = user.token;
 
 			// update the user context and localstorage
-			setUser(res.data.data)
-			localStorage.setItem('user', JSON.stringify(res.data.data))
-		})
-
+			setUser(res.data.data);
+			localStorage.setItem("user", JSON.stringify(res.data.data));
+		});
 	};
 
 	return (
@@ -106,16 +125,30 @@ const ProfileForm = () => {
 				<div className="input-group change-avatar">
 					<div>
 						<label htmlFor="change-avatar">
-							<Avatar lg src={newAvatar ? newAvatar : user.avatar} alt="avatar" />
+							<Avatar
+								lg
+								src={newAvatar ? newAvatar : user.avatar}
+								alt="avatar"
+							/>
 						</label>
-						<input id="change-avatar" accept="image/*" type="file" onChange={handleImageUpload}/>
+						<input
+							id="change-avatar"
+							accept="image/*"
+							type="file"
+							onChange={handleImageUpload}
+						/>
 					</div>
 					<div className="change-avatar-meta">
 						<h2>{user.username}</h2>
 						<label htmlFor="change-avatar-link">
 							<span>Change Profile Photo</span>
 						</label>
-						<input id="change-avatar-link" accept="image/*" type="file" onChange={handleImageUpload}/>
+						<input
+							id="change-avatar-link"
+							accept="image/*"
+							type="file"
+							onChange={handleImageUpload}
+						/>
 					</div>
 				</div>
 

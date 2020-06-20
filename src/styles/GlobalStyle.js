@@ -18,6 +18,7 @@ const GlobalStyle = createGlobalStyle`
 		line-height: 1.7;
 		background: ${props => props.theme.bg};
 		color: ${props => props.theme.primaryColor};
+		overflow-x: hidden;
 	}
 
 	h1, h2, h3, h4, h5, h6 {

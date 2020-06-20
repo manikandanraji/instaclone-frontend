@@ -8,20 +8,14 @@ const Explore = () => {
 	const [posts, setPosts] = useState([]);
 
 	useEffect(() => {
-		getUsers().then(response => setUsers(response.data.data));
+		getUsers().then(response => setUsers([]));
 		getPosts().then(response => setPosts(response.data.data));
 	}, []);
 
 	return (
 		<>
-			<h2>User Suggestions</h2>
-			<div style={{ display: "flex", marginTop: "0.8rem" }}>
-				{users.map(user => (
-					<ProfilePreview key={user.username} user={user} />
-				))}
-			</div>
-			<div style={{ marginTop: "3rem" }}>
-				<h2>Explore</h2>
+			<div style={{ marginTop: "2.3rem" }}>
+				<h3>Explore</h3>
 				<PostPreview posts={posts} />
 			</div>
 		</>

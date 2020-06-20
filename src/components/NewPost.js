@@ -58,12 +58,12 @@ const NewPost = () => {
 			data.append("file", e.target.files[0]);
 			data.append("upload_preset", "instaclone");
 
-			uploadImage({ body: data })
-				.then(res => {
-					console.log(res.data);
-					setPostImage(res.data.secure_url);
-				})
-				.catch(err => console.log(err));
+			// uploadImage({ body: data })
+			// 	.then(res => {
+			// 		console.log(res.data);
+			// 		setPostImage(res.data.secure_url);
+			// 	})
+			// 	.catch(err => console.log(err));
 		}
 	};
 
@@ -109,12 +109,12 @@ const NewPost = () => {
 				style={{ display: "none" }}
 			/>
 			{showModal && (
-				<Modal>
+				<Modal center="true" newpost="true" width="700px">
 					<div className="newpost-header">
 						<h3 onClick={() => setShowModal(false)}>Cancel</h3>
 						<h3 onClick={handleSubmitPost}>Share</h3>
 					</div>
-					{preview && <img src={preview} alt="preview" />}
+					{preview && <img className="post-preview" src={preview} alt="preview" />}
 					<div>
 						<textarea
 							placeholder="Add caption"
