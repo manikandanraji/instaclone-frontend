@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
-import { useHistory } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 import styled from "styled-components";
 import Button from "../styles/Button";
 import Avatar from "../styles/Avatar";
@@ -76,6 +76,13 @@ export const Wrapper = styled.div`
 			margin-left: 0;
 		}
 	}
+
+	@media screen and (max-width: 430px) {
+		input,
+		textarea {
+			width: 99%;
+		}
+	}
 `;
 
 const ProfileForm = () => {
@@ -103,16 +110,16 @@ const ProfileForm = () => {
 	const handleEditProfile = e => {
 		e.preventDefault();
 
-		if(!fullname.value) {
-			return toast.error('The name field should not be empty');
+		if (!fullname.value) {
+			return toast.error("The name field should not be empty");
 		}
 
-		if(!username.value) {
-			return toast.error('The username field should not be empty');
+		if (!username.value) {
+			return toast.error("The username field should not be empty");
 		}
 
-		if(!email.value) {
-			return toast.error('The email field should not be empty');
+		if (!email.value) {
+			return toast.error("The email field should not be empty");
 		}
 
 		const body = {
@@ -124,15 +131,17 @@ const ProfileForm = () => {
 			avatar: newAvatar || user.avatar
 		};
 
-		editProfile({ body }).then(res => {
-			console.log("submitted");
-			res.data.data.token = user.token;
+		editProfile({ body })
+			.then(res => {
+				console.log("submitted");
+				res.data.data.token = user.token;
 
-			// update the user context and localstorage
-			setUser(res.data.data);
-			localStorage.setItem("user", JSON.stringify(res.data.data));
-			history.push(`/${body.username || user.username}`)
-		}).catch(err => toast.error(err.response.data.message));
+				// update the user context and localstorage
+				setUser(res.data.data);
+				localStorage.setItem("user", JSON.stringify(res.data.data));
+				history.push(`/${body.username || user.username}`);
+			})
+			.catch(err => toast.error(err.response.data.message));
 	};
 
 	return (
