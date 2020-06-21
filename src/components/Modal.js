@@ -25,7 +25,6 @@ const ModalWrapper = styled.div`
 	div.modal-content {
 		width: ${props => props.width};
 		height: ${props => props.height};
-		margin: 5rem auto;
 		background: ${props => props.theme.white};
 		border-radius: 4px;
 	}
@@ -54,7 +53,7 @@ const ModalWrapper = styled.div`
 
 			@media screen and (max-width: 530px) {
 				div.modal-content {
-					margin: 8rem auto;
+					margin: 4rem auto;
 					width: 90%;
 				}
 			}

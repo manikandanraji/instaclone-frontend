@@ -59,7 +59,7 @@ const Wrapper = styled.div`
 		.avatar {
 			width: 140px;
 			height: 140px;
-	}
+		}
 
 		.profile-meta {
 			flex-direction: column;
@@ -67,6 +67,15 @@ const Wrapper = styled.div`
 
 		button {
 			margin-left: 0;
+		}
+	}
+
+	@media screen and (max-width: 500px) {
+		.avatar {
+			width: 100px;
+			height: 100px;
+			position: relative;
+			top: -34px;
 		}
 	}
 `;
@@ -207,7 +216,7 @@ const ProfileHeader = ({ profile }) => {
 					</span>
 
 					{showFollowersModal && (
-						<Modal center="true" width="380px">
+						<Modal center="true" width="340px">
 							<ModalContent
 								loggedInUser={user}
 								users={profile?.followers}
@@ -218,7 +227,7 @@ const ProfileHeader = ({ profile }) => {
 					)}
 
 					{showFollowingModal && (
-						<Modal center="true" width="380px">
+						<Modal center="true" width="340px">
 							<ModalContent
 								loggedInUser={user}
 								users={profile?.following}

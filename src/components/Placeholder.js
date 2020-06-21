@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { BookmarkIcon, PostIcon } from './Icons';
+import { BookmarkIcon, PostIcon } from "./Icons";
 
 const Wrapper = styled.div`
 	margin: auto;
@@ -12,7 +12,15 @@ const Wrapper = styled.div`
 		height: 50px;
 		width: 50px;
 		margin-bottom: 1rem;
-		fill: ${props => props.theme.secondaryColor};
+	}
+
+	@media screen and (max-width: 500px) {
+		svg {
+			height: 35px;
+			width: 35px;
+		}
+
+		width: 350px;
 	}
 `;
 
