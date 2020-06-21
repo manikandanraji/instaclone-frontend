@@ -59,12 +59,12 @@ const NewPost = () => {
 			data.append("file", e.target.files[0]);
 			data.append("upload_preset", "instaclone");
 
-			// uploadImage({ body: data })
-			// 	.then(res => {
-			// 		console.log(res.data);
-			// 		setPostImage(res.data.secure_url);
-			// 	})
-			// 	.catch(err => console.log(err));
+			uploadImage({ body: data })
+				.then(res => {
+					console.log(res.data);
+					setPostImage(res.data.secure_url);
+				})
+				.catch(err => console.log(err));
 		}
 	};
 
