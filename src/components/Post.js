@@ -13,39 +13,36 @@ import { timeSince } from "../utils";
 import { MoreIcon, CommentIcon, InboxIcon } from "./Icons";
 
 const ModalContentWrapper = styled.div`
+	width: 300px;
 	display: flex;
 	flex-direction: column;
 	text-align: center;
 
 	span:last-child {
-		color: inherit;
 		border: none;
 	}
 
 	span {
 		display: block;
 		padding: 1rem 0;
-		color: ${props => props.theme.red};
 		border-bottom: 1px solid ${props => props.theme.borderColor};
 		cursor: pointer;
 	}
 `;
 
-const ModalContent = ({ postId, closeModal }) => {
+export const ModalContent = ({ hideGotoPost, postId, closeModal }) => {
 	const history = useHistory();
+
+	const handleGoToPost = () => {
+		closeModal()
+		history.push(`/p/${postId}`)
+	}
 
 	return (
 		<ModalContentWrapper>
-			<span onClick={() => closeModal()}>Cancel</span>
-			<DeletePost postId={postId} closeModal={closeModal} />
-			<span
-				onClick={() => {
-					closeModal();
-					history.push(`/p/${postId}`);
-				}}
-			>
-				Go to Post
-			</span>
+			<span className="danger" onClick={closeModal}>Cancel</span>
+			<DeletePost postId={postId} closeModal={closeModal} goToHome={true}/>
+			{!hideGotoPost && <span onClick={handleGoToPost}>Go to Post</span> }
 		</ModalContentWrapper>
 	);
 };
@@ -126,13 +123,14 @@ const Post = ({ post }) => {
 	const comment = useInput("");
 	const history = useHistory();
 
+	const [ showModal, setShowModal ] = useState(false);
+	const closeModal = () => setShowModal(false);
+
 	const [newComments, setNewComments] = useState([]);
 	const [likesState, setLikes] = useState(post.likesCount);
-	const [showModal, setShowModal] = useState(false);
 
 	const incLikes = () => setLikes(likesState + 1);
 	const decLikes = () => setLikes(likesState - 1);
-	const closeModal = () => setShowModal(false);
 
 	const handleAddComment = e => {
 		if (e.keyCode === 13) {
@@ -157,13 +155,14 @@ const Post = ({ post }) => {
 						alt="avatar"
 						onClick={() => history.push(`/${post.user?.username}`)}
 					/>
-					<h3 onClick={() => history.push(`/${post.user?.username}`)}>
+					<h3 className="pointer" onClick={() => history.push(`/${post.user?.username}`)}>
 						{post.user?.username}
 					</h3>
 				</div>
+
 				{showModal && (
-					<Modal center="true" width="320px" height="180px">
-						<ModalContent closeModal={closeModal} postId={post._id} />
+					<Modal>
+						<ModalContent postId={post._id} closeModal={closeModal}/>
 					</Modal>
 				)}
 				{post.isMine && <MoreIcon onClick={() => setShowModal(true)} />}
@@ -221,7 +220,7 @@ const Post = ({ post }) => {
 					<Comment key={comment._id} hideavatar={true} comment={comment} />
 				))}
 
-				<span className="secondary">{timeSince(post.createdAt)} ago</span>
+				<span className="secondary">{timeSince(post?.createdAt)} ago</span>
 			</div>
 
 			<div className="add-comment">

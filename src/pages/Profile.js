@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
-import PostPreview from "./PostPreview";
-import ProfileHeader from "./ProfileHeader";
-import Placeholder from "./Placeholder";
-import Loader from "./Loader";
-import { PostIcon, SavedIcon } from "./Icons";
+import PostPreview from "../components/PostPreview";
+import ProfileHeader from "../components/ProfileHeader";
+import Placeholder from "../components/Placeholder";
+import Loader from "../components/Loader";
+import { PostIcon, SavedIcon } from "../components/Icons";
 import { getProfile } from "../services/api";
 
 const Wrapper = styled.div`
@@ -42,17 +42,30 @@ const Profile = () => {
 	const { username } = useParams();
 	const [profile, setProfile] = useState({});
 	const [loading, setLoading] = useState(true);
+	const [deadend, setDeadend] = useState(false);
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
-		getProfile({ username }).then(res => {
-			setProfile(res.data.data);
-			setLoading(false);
-		});
+		getProfile({ username })
+			.then(res => {
+				setLoading(false);
+				setDeadend(false)
+				setProfile(res.data.data);
+			})
+			.catch(err => setDeadend(true));
 	}, [username]);
 
-	if (loading) {
+	if (!deadend && loading) {
 		return <Loader />;
+	}
+
+	if (deadend) {
+		return (
+			<Placeholder
+				title="Sorry, this page isn't available"
+				text="The link you followed may be broken, or the page may have been removed"
+			/>
+		);
 	}
 
 	return (

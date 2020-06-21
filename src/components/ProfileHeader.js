@@ -17,6 +17,7 @@ const Wrapper = styled.div`
 	.avatar {
 		width: 180px;
 		height: 180px;
+		object-fit: cover;
 		border-radius: 90px;
 		margin-right: 2rem;
 		position: relative;
@@ -89,17 +90,18 @@ const modalHeaderStyle = {
 };
 
 const ModalContentWrapper = styled.div`
-	padding: 1rem;
-	font-size: 0.9rem;
-
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	padding: 1rem;
+	font-size: 0.9rem;
+	width: 350px;
 
 	img {
-		width: 42px;
-		height: 42px;
-		border-radius: 21px;
+		width: 40px;
+		object-fit: cover;
+		height: 40px;
+		border-radius: 20px;
 		margin-right: 1rem;
 	}
 
@@ -118,7 +120,7 @@ const ModalContentWrapper = styled.div`
 	}
 `;
 
-const ModalContent = ({ loggedInUser, users, title, closeModal }) => {
+const ModalContent = ({ loggedInUser, users, closeModal, title }) => {
 	const history = useHistory();
 
 	return (
@@ -162,17 +164,17 @@ const ModalContent = ({ loggedInUser, users, title, closeModal }) => {
 const ProfileHeader = ({ profile }) => {
 	const history = useHistory();
 	const { user, setUser } = useContext(UserContext);
-	const [followersState, setFollowers] = useState(0);
+
 	const [showFollowersModal, setFollowersModal] = useState(false);
 	const [showFollowingModal, setFollowingModal] = useState(false);
-
-	const incFollowers = () => setFollowers(followersState + 1);
-	const decFollowers = () => setFollowers(followersState - 1);
-
 	const closeModal = () => {
 		setFollowersModal(false);
 		setFollowingModal(false);
 	};
+
+	const [followersState, setFollowers] = useState(0);
+	const incFollowers = () => setFollowers(followersState + 1);
+	const decFollowers = () => setFollowers(followersState - 1);
 
 	const handleLogout = () => {
 		setUser(null);
@@ -215,24 +217,24 @@ const ProfileHeader = ({ profile }) => {
 						{profile?.followingCount} following
 					</span>
 
-					{showFollowersModal && (
-						<Modal center="true" width="340px">
+					{showFollowersModal && profile?.followers.length > 0 && (
+						<Modal>
 							<ModalContent
 								loggedInUser={user}
 								users={profile?.followers}
-								closeModal={closeModal}
 								title="Followers"
+								closeModal={closeModal}
 							/>
 						</Modal>
 					)}
 
-					{showFollowingModal && (
-						<Modal center="true" width="340px">
+					{showFollowingModal && profile?.following.length > 0 && (
+						<Modal>
 							<ModalContent
 								loggedInUser={user}
 								users={profile?.following}
-								closeModal={closeModal}
 								title="Following"
+								closeModal={closeModal}
 							/>
 						</Modal>
 					)}

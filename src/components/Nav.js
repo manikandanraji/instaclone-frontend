@@ -83,7 +83,7 @@ const Nav = () => {
 					<li>
 						<Link to={`/${user.username}`}>
 							<img
-								style={{ width: "24px", height: "24px", borderRadius: "12px" }}
+								style={{ width: "24px", height: "24px", objectFit: "cover", borderRadius: "12px" }}
 								src={user.avatar}
 								alt="avatar"
 							/>

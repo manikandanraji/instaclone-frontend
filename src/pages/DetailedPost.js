@@ -1,15 +1,18 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import styled from "styled-components";
-import LikePost from "./LikePost";
-import SavePost from "./SavePost";
-import Comment from "./Comment";
+import LikePost from "../components/LikePost";
+import SavePost from "../components/SavePost";
+import Comment from "../components/Comment";
+import Placeholder from "../components/Placeholder";
 import Avatar from "../styles/Avatar";
-import Loader from "./Loader";
+import Loader from "../components/Loader";
+import Modal from "../components/Modal";
+import { ModalContent } from "../components/Post";
 import useInput from "../hooks/useInput";
 import { getPost, addComment } from "../services/api";
 import { timeSince } from "../utils";
-import { CommentIcon, InboxIcon } from "./Icons";
+import { MoreIcon, CommentIcon, InboxIcon } from "../components/Icons";
 
 const Wrapper = styled.div`
 	display: grid;
@@ -19,11 +22,17 @@ const Wrapper = styled.div`
 		border: 1px solid ${props => props.theme.borderColor};
 	}
 
+	.post-header-wrapper {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 1rem;
+		border-bottom: 1px solid ${props => props.theme.borderColor};
+	}
+
 	.post-header {
 		display: flex;
 		align-items: center;
-		border-bottom: 1px solid ${props => props.theme.borderColor};
-		padding: 1rem;
 	}
 
 	.post-img {
@@ -89,11 +98,17 @@ const Wrapper = styled.div`
 const DetailedPost = () => {
 	const history = useHistory();
 	const { postId } = useParams();
+
 	const comment = useInput("");
 	const commmentsEndRef = useRef(null);
 
+	const [showModal, setShowModal] = useState(false);
+	const closeModal = () => setShowModal(false);
+
 	const [loading, setLoading] = useState(true);
+	const [deadend, setDeadend] = useState(false);
 	const [post, setPost] = useState({});
+
 	const [likesState, setLikes] = useState(0);
 	const [commentsState, setComments] = useState([]);
 
@@ -112,8 +127,8 @@ const DetailedPost = () => {
 				body: { text: comment.value }
 			}).then(resp => {
 				setComments([...commentsState, resp.data.data]);
-				scrollToBottom()
-				window.scrollTo(0, 0)
+				scrollToBottom();
+				window.scrollTo(0, 0);
 			});
 
 			comment.setValue("");
@@ -127,11 +142,21 @@ const DetailedPost = () => {
 			setComments(res.data.data.comments);
 			setLikes(res.data.data.likesCount);
 			setLoading(false);
-		});
+			setDeadend(false);
+		}).catch(err => setDeadend(true));
 	}, [postId]);
 
-	if (loading) {
+	if (!deadend && loading) {
 		return <Loader />;
+	}
+
+	if (deadend) {
+		return (
+			<Placeholder
+				title="Sorry, this page isn't available"
+				text="The link you followed may be broken, or the page may have been removed"
+			/>
+		);
 	}
 
 	return (
@@ -143,20 +168,33 @@ const DetailedPost = () => {
 			/>
 
 			<div className="post-info">
-				<div className="post-header">
-					<Avatar
-						onClick={() => history.push(`/${post.user?.username}`)}
-						className="pointer avatar"
-						src={post.user?.avatar}
-						alt="avatar"
-					/>
+				<div className="post-header-wrapper">
+					<div className="post-header">
+						<Avatar
+							onClick={() => history.push(`/${post.user?.username}`)}
+							className="pointer avatar"
+							src={post.user?.avatar}
+							alt="avatar"
+						/>
 
-					<h3
-						className="pointer"
-						onClick={() => history.push(`/${post.user?.username}`)}
-					>
-						{post.user?.username}
-					</h3>
+						<h3
+							className="pointer"
+							onClick={() => history.push(`/${post.user?.username}`)}
+						>
+							{post.user?.username}
+						</h3>
+					</div>
+					{post.isMine && <MoreIcon onClick={() => setShowModal(true)} />}
+
+					{showModal && (
+						<Modal>
+							<ModalContent
+								postId={post._id}
+								hideGotoPost={true}
+								closeModal={closeModal}
+							/>
+						</Modal>
+					)}
 				</div>
 
 				<div className="comments">

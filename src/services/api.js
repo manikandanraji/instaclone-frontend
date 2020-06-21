@@ -71,5 +71,5 @@ export const follow = async ({ url }) => {
 }
 
 export const uploadImage = async ({ body }) => {
-	return await axios.post('https://api.cloudinary.com/v1_1/douy56nkf/upload', body)
+	return await axios.post(process.env.REACT_APP_CLOUDINARY_URL, body)
 }

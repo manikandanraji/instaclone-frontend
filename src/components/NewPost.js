@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
-import { toast } from 'react-toastify';
 import styled from "styled-components";
+import { toast } from "react-toastify";
 import Modal from "./Modal";
 import useInput from "../hooks/useInput";
 import { FeedContext } from "../context/FeedContext";
@@ -35,12 +35,22 @@ const NewPostWrapper = styled.div`
 		border: none;
 		resize: none;
 	}
+
+	.modal-content {
+		width: 700px;
+	}
+
+	@media screen and (max-width: 780px) {
+		.modal-content {
+			width: 90vw;
+		}
+	}
 `;
 
 const NewPost = () => {
 	const { feed, setFeed } = useContext(FeedContext);
-	const caption = useInput("");
 	const [showModal, setShowModal] = useState(false);
+	const caption = useInput("");
 	const [preview, setPreview] = useState("");
 	const [postImage, setPostImage] = useState("");
 
@@ -69,7 +79,7 @@ const NewPost = () => {
 	};
 
 	const handleSubmitPost = () => {
-		if(!caption.value) {
+		if (!caption.value) {
 			return toast.error("You should leave the caption field empty");
 		}
 
@@ -83,6 +93,8 @@ const NewPost = () => {
 			.split(" ")
 			.filter(caption => !caption.startsWith("#"))
 			.join(" ");
+
+		caption.setValue("");
 
 		const newPost = {
 			caption: cleanedCaption,
@@ -115,18 +127,22 @@ const NewPost = () => {
 				style={{ display: "none" }}
 			/>
 			{showModal && (
-				<Modal newpost="true" width="700px">
-					<div className="newpost-header">
-						<h3 onClick={() => setShowModal(false)}>Cancel</h3>
-						<h3 onClick={handleSubmitPost}>Share</h3>
-					</div>
-					{preview && <img className="post-preview" src={preview} alt="preview" />}
-					<div>
-						<textarea
-							placeholder="Add caption"
-							value={caption.value}
-							onChange={caption.onChange}
-						/>
+				<Modal>
+					<div className="modal-content">
+						<div className="newpost-header">
+							<h3 onClick={() => setShowModal(false)}>Cancel</h3>
+							<h3 onClick={handleSubmitPost}>Share</h3>
+						</div>
+						{preview && (
+							<img className="post-preview" src={preview} alt="preview" />
+						)}
+						<div>
+							<textarea
+								placeholder="Add caption"
+								value={caption.value}
+								onChange={caption.onChange}
+							/>
+						</div>
 					</div>
 				</Modal>
 			)}

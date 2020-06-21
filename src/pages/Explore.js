@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import PostPreview from "./PostPreview";
-import Loader from "../components/Loader";
+import PostPreview from "../components/PostPreview";
+import Loader from "../components/PostPreview";
 import { getPosts } from "../services/api";
 
 const Explore = () => {

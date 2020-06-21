@@ -8,6 +8,10 @@ const Wrapper = styled.div`
 	width: 450px;
 	text-align: center;
 
+	p {
+		padding-top: 0.3rem;
+	}
+
 	svg {
 		height: 50px;
 		width: 50px;

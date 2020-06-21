@@ -39,6 +39,10 @@ const GlobalStyle = createGlobalStyle`
 		color: ${props => props.theme.secondaryColor};
 	}
 
+	.danger {
+		color: ${props => props.theme.red};
+	}
+
 	button, svg {
 	  cursor: pointer;
 	}
