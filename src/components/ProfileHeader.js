@@ -49,6 +49,10 @@ const Wrapper = styled.div`
 		padding-right: 1rem;
 	}
 
+	a {
+		color: ${props => props.theme.blue};
+	}
+
 	@media screen and (max-width: 600px) {
 		font-size: 0.9rem;
 

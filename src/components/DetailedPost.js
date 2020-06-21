@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useRef, useState, useEffect } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import styled from "styled-components";
 import LikePost from "./LikePost";
 import SavePost from "./SavePost";
 import Comment from "./Comment";
 import Avatar from "../styles/Avatar";
+import Loader from "./Loader";
 import useInput from "../hooks/useInput";
 import { getPost, addComment } from "../services/api";
+import { timeSince } from "../utils";
 import { CommentIcon, InboxIcon } from "./Icons";
 
 const Wrapper = styled.div`
@@ -32,6 +34,7 @@ const Wrapper = styled.div`
 
 	.post-actions-stats {
 		padding: 1rem;
+		padding-bottom: 0.1rem;
 	}
 
 	.post-actions {
@@ -47,7 +50,7 @@ const Wrapper = styled.div`
 	.comments {
 		border-bottom: 1px solid ${props => props.theme.borderColor};
 		padding: 1rem;
-		height: 330px;
+		height: 300px;
 		overflow-y: scroll;
 		scrollbar-width: none;
 	}
@@ -84,15 +87,21 @@ const Wrapper = styled.div`
 `;
 
 const DetailedPost = () => {
-	const comment = useInput("");
+	const history = useHistory();
 	const { postId } = useParams();
-	const [post, setPost] = useState({});
+	const comment = useInput("");
+	const commmentsEndRef = useRef(null);
 
+	const [loading, setLoading] = useState(true);
+	const [post, setPost] = useState({});
 	const [likesState, setLikes] = useState(0);
 	const [commentsState, setComments] = useState([]);
 
 	const incLikes = () => setLikes(likesState + 1);
 	const decLikes = () => setLikes(likesState - 1);
+
+	const scrollToBottom = () =>
+		commmentsEndRef.current.scrollIntoView({ behaviour: "smooth" });
 
 	const handleAddComment = e => {
 		if (e.keyCode === 13) {
@@ -101,19 +110,29 @@ const DetailedPost = () => {
 			addComment({
 				postId: post._id,
 				body: { text: comment.value }
-			}).then(resp => setComments([...commentsState, resp.data.data]));
+			}).then(resp => {
+				setComments([...commentsState, resp.data.data]);
+				scrollToBottom()
+				window.scrollTo(0, 0)
+			});
 
 			comment.setValue("");
 		}
 	};
 
 	useEffect(() => {
+		window.scrollTo(0, 0);
 		getPost({ postId }).then(res => {
 			setPost(res.data.data);
 			setComments(res.data.data.comments);
 			setLikes(res.data.data.likesCount);
+			setLoading(false);
 		});
 	}, [postId]);
+
+	if (loading) {
+		return <Loader />;
+	}
 
 	return (
 		<Wrapper>
@@ -125,14 +144,26 @@ const DetailedPost = () => {
 
 			<div className="post-info">
 				<div className="post-header">
-					<Avatar className="avatar" src={post.user?.avatar} alt="avatar" />
-					<h3>{post.user?.username}</h3>
+					<Avatar
+						onClick={() => history.push(`/${post.user?.username}`)}
+						className="pointer avatar"
+						src={post.user?.avatar}
+						alt="avatar"
+					/>
+
+					<h3
+						className="pointer"
+						onClick={() => history.push(`/${post.user?.username}`)}
+					>
+						{post.user?.username}
+					</h3>
 				</div>
 
 				<div className="comments">
 					{commentsState.map(comment => (
 						<Comment key={comment._id} comment={comment} />
 					))}
+					<div ref={commmentsEndRef} />
 				</div>
 
 				<div className="post-actions-stats">
@@ -154,6 +185,13 @@ const DetailedPost = () => {
 						</span>
 					)}
 				</div>
+
+				<span
+					style={{ display: "block", padding: "0 1rem", paddingBottom: "1rem" }}
+					className="secondary"
+				>
+					{timeSince(post.createdAt)} ago
+				</span>
 
 				<div className="add-comment">
 					<textarea

@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { toast } from "react-toastify";
 import styled from "styled-components";
 import { me, authenticate } from "../services/api";
 import useInput from "../hooks/useInput";
@@ -56,19 +57,28 @@ const Login = ({ signup }) => {
 	const handleLogin = async e => {
 		e.preventDefault();
 
+		if (!email.value || !password.value) {
+			return toast.error("Please fill in both the fields");
+		}
+
 		const body = { email: email.value, password: password.value };
 
-		const tokenResponse = await authenticate({ url: "/auth/login", body });
+		let tokenResponse;
+		try {
+			tokenResponse = await authenticate({ url: "/auth/login", body });
+		} catch (err) {
+			return toast.error(err.response.data.message);
+		}
 
 		const userResponse = await me({
 			url: "/auth/me",
 			token: tokenResponse.data.token
 		});
 
-		userResponse.data.data.token = tokenResponse.data.token
+		userResponse.data.data.token = tokenResponse.data.token;
 
-		localStorage.setItem('user', JSON.stringify(userResponse.data.data))
-		setUser(userResponse.data.data)
+		localStorage.setItem("user", JSON.stringify(userResponse.data.data));
+		setUser(userResponse.data.data);
 
 		email.setValue("");
 		password.setValue("");

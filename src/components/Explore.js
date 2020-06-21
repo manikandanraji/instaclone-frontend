@@ -1,21 +1,27 @@
 import React, { useState, useEffect } from "react";
-import ProfilePreview from "./ProfilePreview";
 import PostPreview from "./PostPreview";
-import { getUsers, getPosts } from "../services/api";
+import Loader from "../components/Loader";
+import { getPosts } from "../services/api";
 
 const Explore = () => {
-	const [users, setUsers] = useState([]);
+	const [loading, setLoading] = useState(true);
 	const [posts, setPosts] = useState([]);
 
 	useEffect(() => {
-		getUsers().then(response => setUsers([]));
-		getPosts().then(response => setPosts(response.data.data));
+		getPosts().then(response => {
+			setPosts(response.data.data);
+			setLoading(false);
+		});
 	}, []);
+
+	if (loading) {
+		return <Loader />;
+	}
 
 	return (
 		<>
 			<div style={{ marginTop: "2.3rem" }}>
-				<h3>Explore</h3>
+				<h2>Explore</h2>
 				<PostPreview posts={posts} />
 			</div>
 		</>

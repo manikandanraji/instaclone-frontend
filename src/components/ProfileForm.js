@@ -1,4 +1,6 @@
 import React, { useState, useContext } from "react";
+import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import styled from "styled-components";
 import Button from "../styles/Button";
 import Avatar from "../styles/Avatar";
@@ -77,6 +79,7 @@ export const Wrapper = styled.div`
 `;
 
 const ProfileForm = () => {
+	const history = useHistory();
 	const { user, setUser } = useContext(UserContext);
 	const [newAvatar, setNewAvatar] = useState("");
 
@@ -100,6 +103,18 @@ const ProfileForm = () => {
 	const handleEditProfile = e => {
 		e.preventDefault();
 
+		if(!fullname.value) {
+			return toast.error('The name field should not be empty');
+		}
+
+		if(!username.value) {
+			return toast.error('The username field should not be empty');
+		}
+
+		if(!email.value) {
+			return toast.error('The email field should not be empty');
+		}
+
 		const body = {
 			fullname: fullname.value,
 			username: username.value,
@@ -116,7 +131,8 @@ const ProfileForm = () => {
 			// update the user context and localstorage
 			setUser(res.data.data);
 			localStorage.setItem("user", JSON.stringify(res.data.data));
-		});
+			history.push(`/${body.username || user.username}`)
+		}).catch(err => toast.error(err.response.data.message));
 	};
 
 	return (

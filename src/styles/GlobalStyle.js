@@ -27,12 +27,16 @@ const GlobalStyle = createGlobalStyle`
 
 	a {
 		text-decoration: none;
-		color: ${props => props.theme.blue};
 		cursor: pointer;
+		color: inherit;
 	}
 
 	.pointer {
 		cursor: pointer;
+	}
+
+	.secondary {
+		color: ${props => props.theme.secondaryColor};
 	}
 
 	button, svg {

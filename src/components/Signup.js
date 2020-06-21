@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { toast } from 'react-toastify';
 import { authenticate, me } from "../services/api";
 import { FormWrapper } from "./Login";
 import useInput from "../hooks/useInput";
@@ -6,7 +7,7 @@ import { UserContext } from "../context/UserContext";
 
 import logo from "../assets/logo.png";
 const Signup = ({ login }) => {
-	const { setUser } = useContext(UserContext)
+	const { setUser } = useContext(UserContext);
 	const email = useInput("");
 	const fullname = useInput("");
 	const username = useInput("");
@@ -15,6 +16,10 @@ const Signup = ({ login }) => {
 	const handleLogin = async e => {
 		e.preventDefault();
 
+		if(!email.value || !password.value || !username.value || !fullname.value) {
+			return toast.error('Please fill in all the fields')
+		}
+
 		const body = {
 			email: email.value,
 			password: password.value,
@@ -22,7 +27,12 @@ const Signup = ({ login }) => {
 			fullname: fullname.value
 		};
 
-		const tokenResponse = await authenticate({ url: "/auth/signup", body });
+		let tokenResponse;
+		try {
+			tokenResponse = await authenticate({ url: "/auth/signup", body });
+		} catch (err) {
+			return toast.error(err.response.data.message)
+		}
 
 		const userResponse = await me({
 			url: "/auth/me",

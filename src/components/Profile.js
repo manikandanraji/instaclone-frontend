@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import PostPreview from "./PostPreview";
 import ProfileHeader from "./ProfileHeader";
 import Placeholder from "./Placeholder";
+import Loader from "./Loader";
 import { PostIcon, SavedIcon } from "./Icons";
 import { getProfile } from "../services/api";
 
@@ -40,10 +41,19 @@ const Profile = () => {
 
 	const { username } = useParams();
 	const [profile, setProfile] = useState({});
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		getProfile({ username }).then(res => setProfile(res.data.data));
+		window.scrollTo(0, 0);
+		getProfile({ username }).then(res => {
+			setProfile(res.data.data);
+			setLoading(false);
+		});
 	}, [username]);
+
+	if (loading) {
+		return <Loader />;
+	}
 
 	return (
 		<Wrapper>

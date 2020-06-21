@@ -9,6 +9,7 @@ import Modal from "./Modal";
 import useInput from "../hooks/useInput";
 import Avatar from "../styles/Avatar";
 import { addComment } from "../services/api";
+import { timeSince } from "../utils";
 import { MoreIcon, CommentIcon, InboxIcon } from "./Icons";
 
 const ModalContentWrapper = styled.div`
@@ -36,7 +37,7 @@ const ModalContent = ({ postId, closeModal }) => {
 	return (
 		<ModalContentWrapper>
 			<span onClick={() => closeModal()}>Cancel</span>
-			<DeletePost postId={postId} closeModal={closeModal}/>
+			<DeletePost postId={postId} closeModal={closeModal} />
 			<span
 				onClick={() => {
 					closeModal();
@@ -100,6 +101,11 @@ export const PostWrapper = styled.div`
 		padding-right: 0.3rem;
 	}
 
+	.view-comments {
+		color: ${props => props.theme.secondaryColor};
+		cursor: pointer;
+	}
+
 	textarea {
 		height: 100%;
 		width: 100%;
@@ -120,7 +126,7 @@ const Post = ({ post }) => {
 	const comment = useInput("");
 	const history = useHistory();
 
-	const [commentsState, setComments] = useState(post.comments);
+	const [newComments, setNewComments] = useState([]);
 	const [likesState, setLikes] = useState(post.likesCount);
 	const [showModal, setShowModal] = useState(false);
 
@@ -135,7 +141,7 @@ const Post = ({ post }) => {
 			addComment({
 				postId: post._id,
 				body: { text: comment.value }
-			}).then(resp => setComments([...commentsState, resp.data.data]));
+			}).then(resp => setNewComments([...newComments, resp.data.data]));
 
 			comment.setValue("");
 		}
@@ -189,13 +195,33 @@ const Post = ({ post }) => {
 				)}
 
 				<p>
-					<span className="username bold">{post.user?.username}</span>
+					<span
+						onClick={() => history.push(`/${post.user?.username}`)}
+						className="pointer username bold"
+					>
+						{post.user?.username}
+					</span>
 					{post.caption}
 				</p>
 
-				{commentsState.map(comment => (
+				{post.commentsCount > 2 && (
+					<span
+						onClick={() => history.push(`/p/${post._id}`)}
+						className="view-comments"
+					>
+						View all {post.commentsCount} comments
+					</span>
+				)}
+
+				{post.comments?.slice(0, 2).map(comment => (
 					<Comment key={comment._id} hideavatar={true} comment={comment} />
 				))}
+
+				{newComments.map(comment => (
+					<Comment key={comment._id} hideavatar={true} comment={comment} />
+				))}
+
+				<span className="secondary">{timeSince(post.createdAt)} ago</span>
 			</div>
 
 			<div className="add-comment">

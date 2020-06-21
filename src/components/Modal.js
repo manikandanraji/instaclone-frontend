@@ -46,18 +46,19 @@ const ModalWrapper = styled.div`
 	${props =>
 		props.newpost &&
 		css`
-			@media screen and (max-width: 970px) {
+			@media screen and (max-width: 990px) {
 				div.modal-content {
-					width: 90%;
-				margin: 3rem;
+					width: 80%;
+				}
 			}
 
-			@media screen and (max-width: 970px) {
+			@media screen and (max-width: 530px) {
 				div.modal-content {
-						margin: 7rem auto;
+					margin: 8rem auto;
+					width: 90%;
+				}
 			}
-		}
-	`}
+		`}
 `;
 
 const Modal = ({ children, newpost, center, width, height }) => {

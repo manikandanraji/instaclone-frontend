@@ -1,10 +1,11 @@
 import React, { useContext, useState } from "react";
+import { toast } from 'react-toastify';
 import styled from "styled-components";
 import Modal from "./Modal";
 import useInput from "../hooks/useInput";
 import { FeedContext } from "../context/FeedContext";
 import { uploadImage, createPost } from "../services/api";
-import { InboxIcon } from "./Icons";
+import { NewPostIcon } from "./Icons";
 
 const NewPostWrapper = styled.div`
 	.newpost-header {
@@ -68,6 +69,10 @@ const NewPost = () => {
 	};
 
 	const handleSubmitPost = () => {
+		if(!caption.value) {
+			return toast.error("You should leave the caption field empty");
+		}
+
 		setShowModal(false);
 
 		const tags = caption.value
@@ -92,6 +97,7 @@ const NewPost = () => {
 				post.isSaved = false;
 				post.isMine = true;
 				setFeed([post, ...feed]);
+				window.scrollTo(0, 0);
 			})
 			.catch(err => console.log(err));
 	};
@@ -99,7 +105,7 @@ const NewPost = () => {
 	return (
 		<NewPostWrapper>
 			<label htmlFor="upload-post">
-				<InboxIcon />
+				<NewPostIcon />
 			</label>
 			<input
 				id="upload-post"
@@ -109,7 +115,7 @@ const NewPost = () => {
 				style={{ display: "none" }}
 			/>
 			{showModal && (
-				<Modal center="true" newpost="true" width="700px">
+				<Modal newpost="true" width="700px">
 					<div className="newpost-header">
 						<h3 onClick={() => setShowModal(false)}>Cancel</h3>
 						<h3 onClick={handleSubmitPost}>Share</h3>
