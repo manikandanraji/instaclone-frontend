@@ -12,10 +12,10 @@ const SavePost = ({ isSaved, postId }) => {
 	const handleToggleSave = () => {
 		if (savedState) {
 			setSaved(false);
-			toggleSave({ postId }).then(resp => console.log(resp.data.success))
+			toggleSave({ postId })
 		} else {
 			setSaved(true);
-			toggleSave({ postId }).then(resp => console.log(resp.data.success))
+			toggleSave({ postId })
 		}
 	};
 

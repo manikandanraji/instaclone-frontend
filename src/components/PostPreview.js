@@ -94,6 +94,12 @@ const Wrapper = styled.div`
 			height: 200px;
 			width: 100%;
 	}
+
+	@media screen and (max-width: 400px) {
+		img, .overlay {
+			height: 170px;
+			width: 100%;
+	}
 	}
 `;
 

@@ -97,7 +97,9 @@ const Suggestions = () => {
 	const [users, setUsers] = useState([]);
 
 	useEffect(() => {
-		getUsers().then(response => setUsers(response.data.data));
+		getUsers().then(response => {
+			setUsers(response.data.data.filter(user => !user.isFollowing))
+		});
 	}, []);
 
 	return (
@@ -112,6 +114,7 @@ const Suggestions = () => {
 						<Follow nobtn isFollowing={user.isFollowing} userId={user._id} />
 					</div>
 				))}
+			{users.length === 0 && <p>Right now, there's no suggestions for you</p>}
 			</div>
 		</Wrapper>
 	);

@@ -8,6 +8,34 @@ import { UserContext } from "../context/UserContext";
 import { OptionsIcon } from "./Icons";
 import { CloseIcon } from "./Icons";
 
+const MobileWrapper = styled.div`
+	margin: 1rem 0;
+	font-size: 1rem;
+
+	.mobile-profile-stats span {
+		padding-right: 1rem;		
+	}
+
+	.mobile-bio, .mobile-profile-stats {
+		display: none;
+	}
+
+	@media screen and (max-width: 645px) {
+		.mobile-bio {
+			display: block;
+		}
+
+		.mobile-profile-stats {
+			display: block;
+			margin-bottom: 0.4rem;
+		}
+	}
+
+	a {
+		color: ${props => props.theme.blue};
+	}
+`;
+
 const Wrapper = styled.div`
 	display: flex;
 	align-items: center;
@@ -20,8 +48,6 @@ const Wrapper = styled.div`
 		object-fit: cover;
 		border-radius: 90px;
 		margin-right: 2rem;
-		position: relative;
-		top: 10px;
 	}
 
 	.profile-meta {
@@ -54,8 +80,13 @@ const Wrapper = styled.div`
 		color: ${props => props.theme.blue};
 	}
 
-	@media screen and (max-width: 600px) {
-		font-size: 0.9rem;
+	@media screen and (max-width: 645px) {
+		font-size: 1rem;
+
+		.bio,
+		.profile-stats {
+			display: none;
+		}
 
 		.avatar {
 			width: 140px;
@@ -69,14 +100,19 @@ const Wrapper = styled.div`
 		button {
 			margin-left: 0;
 		}
+
+		.bio-mobile {
+			margin: 1rem 0;
+			display: block;
+		}
 	}
 
-	@media screen and (max-width: 500px) {
+	@media screen and (max-width: 420px) {
+		font-size: 0.9rem;
+
 		.avatar {
 			width: 100px;
 			height: 100px;
-			position: relative;
-			top: -34px;
 		}
 	}
 `;
@@ -117,6 +153,10 @@ const ModalContentWrapper = styled.div`
 		font-size: 0.9rem;
 		position: relative;
 		top: -10px;
+	}
+
+	@media screen and (max-width: 480px) {
+		width: 340px;
 	}
 `;
 
@@ -184,29 +224,81 @@ const ProfileHeader = ({ profile }) => {
 	useEffect(() => setFollowers(profile?.followersCount), [profile]);
 
 	return (
-		<Wrapper>
-			<img className="avatar" src={profile?.avatar} alt="avatar" />
-			<div className="profile-info">
-				<div className="profile-meta">
-					<h2>{profile?.username}</h2>
-					{profile?.isMe ? (
-						<div className="options">
-							<Button secondary onClick={() => history.push("/accounts/edit")}>
-								Edit Profile
-							</Button>
-							<OptionsIcon onClick={handleLogout} />
-						</div>
-					) : (
-						<Follow
-							isFollowing={profile?.isFollowing}
-							incFollowers={incFollowers}
-							decFollowers={decFollowers}
-							userId={profile?._id}
-						/>
-					)}
-				</div>
+		<>
+			<Wrapper>
+				<img className="avatar" src={profile?.avatar} alt="avatar" />
+				<div className="profile-info">
+					<div className="profile-meta">
+						<h2>{profile?.username}</h2>
+						{profile?.isMe ? (
+							<div className="options">
+								<Button
+									secondary
+									onClick={() => history.push("/accounts/edit")}
+								>
+									Edit Profile
+								</Button>
+								<OptionsIcon onClick={handleLogout} />
+							</div>
+						) : (
+							<Follow
+								isFollowing={profile?.isFollowing}
+								incFollowers={incFollowers}
+								decFollowers={decFollowers}
+								userId={profile?._id}
+							/>
+						)}
+					</div>
 
-				<div className="profile-stats">
+					<div className="profile-stats">
+						<span>{profile?.postCount} posts</span>
+
+						<span className="pointer" onClick={() => setFollowersModal(true)}>
+							{followersState} followers
+						</span>
+
+						<span className="pointer" onClick={() => setFollowingModal(true)}>
+							{profile?.followingCount} following
+						</span>
+
+						{showFollowersModal && profile?.followers.length > 0 && (
+							<Modal>
+								<ModalContent
+									loggedInUser={user}
+									users={profile?.followers}
+									title="Followers"
+									closeModal={closeModal}
+								/>
+							</Modal>
+						)}
+
+						{showFollowingModal && profile?.following.length > 0 && (
+							<Modal>
+								<ModalContent
+									loggedInUser={user}
+									users={profile?.following}
+									title="Following"
+									closeModal={closeModal}
+								/>
+							</Modal>
+						)}
+					</div>
+
+					<div className="bio">
+						<span className="bold">{profile?.fullname}</span>
+						<p>{profile?.bio}</p>
+						<a
+							href={profile?.website}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							{profile?.website}
+						</a>
+					</div>
+				</div>
+			</Wrapper>
+			<MobileWrapper>
+				<div className="mobile-profile-stats">
 					<span>{profile?.postCount} posts</span>
 
 					<span className="pointer" onClick={() => setFollowersModal(true)}>
@@ -239,16 +331,15 @@ const ProfileHeader = ({ profile }) => {
 						</Modal>
 					)}
 				</div>
-
-				<div className="bio">
+				<div className="mobile-bio">
 					<span className="bold">{profile?.fullname}</span>
 					<p>{profile?.bio}</p>
 					<a href={profile?.website} target="_blank" rel="noopener noreferrer">
 						{profile?.website}
 					</a>
 				</div>
-			</div>
-		</Wrapper>
+			</MobileWrapper>
+		</>
 	);
 };
 

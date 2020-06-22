@@ -102,9 +102,7 @@ const ProfileForm = () => {
 		data.append("file", file);
 		data.append("upload_preset", "instaclone");
 
-		uploadImage({ body: data })
-			.then(res => setNewAvatar(res.data.secure_url))
-			.catch(err => console.log(err));
+		uploadImage({ body: data }).then(res => setNewAvatar(res.data.secure_url));
 	};
 
 	const handleEditProfile = e => {
@@ -133,7 +131,6 @@ const ProfileForm = () => {
 
 		editProfile({ body })
 			.then(res => {
-				console.log("submitted");
 				res.data.data.token = user.token;
 
 				// update the user context and localstorage

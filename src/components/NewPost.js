@@ -69,12 +69,9 @@ const NewPost = () => {
 			data.append("file", e.target.files[0]);
 			data.append("upload_preset", "instaclone");
 
-			uploadImage({ body: data })
-				.then(res => {
-					console.log(res.data);
-					setPostImage(res.data.secure_url);
-				})
-				.catch(err => console.log(err));
+			uploadImage({ body: data }).then(res => {
+				setPostImage(res.data.secure_url);
+			});
 		}
 	};
 
@@ -102,16 +99,14 @@ const NewPost = () => {
 			tags
 		};
 
-		createPost({ body: newPost })
-			.then(res => {
-				const post = res.data.data;
-				post.isLiked = false;
-				post.isSaved = false;
-				post.isMine = true;
-				setFeed([post, ...feed]);
-				window.scrollTo(0, 0);
-			})
-			.catch(err => console.log(err));
+		createPost({ body: newPost }).then(res => {
+			const post = res.data.data;
+			post.isLiked = false;
+			post.isSaved = false;
+			post.isMine = true;
+			setFeed([post, ...feed]);
+			window.scrollTo(0, 0);
+		});
 	};
 
 	return (

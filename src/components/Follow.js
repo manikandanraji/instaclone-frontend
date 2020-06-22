@@ -13,17 +13,13 @@ const Follow = ({ nobtn, isFollowing, incFollowers, decFollowers, userId }) => {
 			if (decFollowers) {
 				decFollowers();
 			}
-			follow({ url: `/users/${userId}/unfollow` }).then(res =>
-				console.log(res.data)
-			);
+			follow({ url: `/users/${userId}/unfollow` });
 		} else {
 			setFollowingState(true);
 			if (incFollowers) {
 				incFollowers();
 			}
-			follow({ url: `/users/${userId}/follow` }).then(res =>
-				console.log(res.data)
-			);
+			follow({ url: `/users/${userId}/follow` });
 		}
 	};
 

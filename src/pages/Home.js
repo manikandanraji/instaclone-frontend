@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import styled from "styled-components";
 import Suggestions from "../components/Suggestions";
+import NoFeedSuggestions from "../components/NoFeedSuggestions";
 import Post from "../components/Post";
 import Loader from "../components/Loader";
 import { FeedContext } from "../context/FeedContext";
@@ -31,12 +32,18 @@ const Home = () => {
 
 	return (
 		<Wrapper>
-			<div className="home">
-				{feed.map(post => (
-					<Post key={post._id} post={post} />
-				))}
-			</div>
-			<Suggestions />
+			{feed.length > 0 ? (
+				<>
+					<div className="home">
+						{feed.map(post => (
+							<Post key={post._id} post={post} />
+						))}
+					</div>
+					<Suggestions />{" "}
+				</>
+			) : (
+				<NoFeedSuggestions />
+			)}
 		</Wrapper>
 	);
 };

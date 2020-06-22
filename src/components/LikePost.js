@@ -13,11 +13,11 @@ const LikePost = ({ isLiked, postId, incLikes, decLikes}) => {
 		if (likedState) {
 			setLiked(false);
 			decLikes()
-			toggleLike({ postId }).then(resp => console.log(resp.data.success))
+			toggleLike({ postId })
 		} else {
 			setLiked(true);
 			incLikes()
-			toggleLike({ postId }).then(resp => console.log(resp.data.success))
+			toggleLike({ postId })
 		}
 	};
 
