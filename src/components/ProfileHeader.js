@@ -12,6 +12,7 @@ import { CloseIcon } from "./Icons";
 const MobileWrapper = styled.div`
   margin: 1rem 0;
   font-size: 1rem;
+	padding-left: 1rem;
 
   .mobile-profile-stats span {
     padding-right: 1rem;
