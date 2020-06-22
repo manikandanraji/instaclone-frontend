@@ -79,6 +79,7 @@ const Login = ({ signup }) => {
 
 		localStorage.setItem("user", JSON.stringify(userResponse.data.data));
 		setUser(userResponse.data.data);
+		toast.success('Login successful')
 
 		email.setValue("");
 		password.setValue("");

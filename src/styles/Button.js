@@ -19,12 +19,6 @@ const Button = styled.button`
 			border: 1px solid #dbdbdb;
 			font-weight: 500;
 		`}
-
-	${props =>
-		props.sm &&
-		css`
-			padding: 0.4rem 0.6rem;
-		`}
 `;
 
 export default Button;

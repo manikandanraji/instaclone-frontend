@@ -26,6 +26,8 @@ const Wrapper = styled.div`
 
 	button {
 		font-size: 0.9rem;
+		position: relative;
+		top: -5px;
 	}
 
 	@media screen and (max-width: 660px) {
@@ -42,6 +44,10 @@ const Wrapper = styled.div`
 
 	@media screen and (max-width: 400px) {
 		width: 340px;
+
+		button {
+			font-size: 0.8rem;
+		}
 	}
 `;
 

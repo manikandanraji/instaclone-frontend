@@ -1,4 +1,5 @@
 import React from "react";
+import { toast } from 'react-toastify';
 import styled from "styled-components";
 import useInput from "../hooks/useInput";
 
@@ -16,8 +17,8 @@ const Search = () => {
 
 	const handleSearch = e => {
 		if(e.keyCode === 13) {
-			console.log(searchterm.value)
 			searchterm.setValue('')
+			return toast.success("Sorry, the search feature isn't finished yet")
 		}
 	}
 

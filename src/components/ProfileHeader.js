@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { toast } from 'react-toastify';
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import Follow from "./Follow";
@@ -219,6 +220,7 @@ const ProfileHeader = ({ profile }) => {
 	const handleLogout = () => {
 		setUser(null);
 		localStorage.removeItem("user");
+		toast.success('You are logged out');
 	};
 
 	useEffect(() => setFollowers(profile?.followersCount), [profile]);

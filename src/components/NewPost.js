@@ -77,7 +77,7 @@ const NewPost = () => {
 
 	const handleSubmitPost = () => {
 		if (!caption.value) {
-			return toast.error("You should leave the caption field empty");
+			return toast.error("Please write something");
 		}
 
 		setShowModal(false);
@@ -106,6 +106,7 @@ const NewPost = () => {
 			post.isMine = true;
 			setFeed([post, ...feed]);
 			window.scrollTo(0, 0);
+			toast.success('Your post has been submitted successfully');
 		});
 	};
 
