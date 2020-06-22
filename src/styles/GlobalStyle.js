@@ -16,8 +16,8 @@ const GlobalStyle = createGlobalStyle`
 		font-family: 'Fira Sans', sans-serif;
 		font-size: 1rem;
 		line-height: 1.7;
-		background: ${props => props.theme.bg};
-		color: ${props => props.theme.primaryColor};
+		background: ${(props) => props.theme.bg};
+		color: ${(props) => props.theme.primaryColor};
 		overflow-x: hidden;
 	}
 
@@ -36,11 +36,11 @@ const GlobalStyle = createGlobalStyle`
 	}
 
 	.secondary {
-		color: ${props => props.theme.secondaryColor};
+		color: ${(props) => props.theme.secondaryColor};
 	}
 
 	.danger {
-		color: ${props => props.theme.red};
+		color: ${(props) => props.theme.red};
 	}
 
 	button, svg {

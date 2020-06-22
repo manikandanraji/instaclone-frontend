@@ -6,12 +6,12 @@ import { FeedProvider } from "./context/FeedContext";
 import { ThemeProvider } from "./context/ThemeContext";
 
 render(
-	<UserProvider>
-		<FeedProvider>
-			<ThemeProvider>
-				<App />
-			</ThemeProvider>
-		</FeedProvider>
-	</UserProvider>,
-	document.getElementById("root")
+  <UserProvider>
+    <FeedProvider>
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
+    </FeedProvider>
+  </UserProvider>,
+  document.getElementById("root")
 );

@@ -45,13 +45,13 @@ const Wrapper = styled.div`
 		justify-content: center;
 		align-items: center;
 		height: 100%;
-		color: ${props => props.theme.white};
+		color: ${(props) => props.theme.white};
 		font-weight: 500;
 		font-size: 1.1rem;
 	}
 
 	svg {
-		fill: ${props => props.theme.white};
+		fill: ${(props) => props.theme.white};
 		position: relative;
 		top: 4px;
 	}
@@ -104,31 +104,31 @@ const Wrapper = styled.div`
 `;
 
 const ProfilePreview = ({ posts }) => {
-	const history = useHistory();
+  const history = useHistory();
 
-	return (
-		<Wrapper>
-			{posts?.map(post => (
-				<div
-					key={post._id}
-					className="container-overlay"
-					onClick={() => history.push(`/p/${post._id}`)}
-				>
-					<img src={post.files[0]} alt="post" />
-					<div className="overlay">
-						<div className="overlay-content">
-							<span>
-								<HeartIcon /> {post.likesCount}
-							</span>
-							<span>
-								<CommentIcon /> {post.commentsCount}
-							</span>
-						</div>
-					</div>
-				</div>
-			))}
-		</Wrapper>
-	);
+  return (
+    <Wrapper>
+      {posts?.map((post) => (
+        <div
+          key={post._id}
+          className="container-overlay"
+          onClick={() => history.push(`/p/${post._id}`)}
+        >
+          <img src={post.files[0]} alt="post" />
+          <div className="overlay">
+            <div className="overlay-content">
+              <span>
+                <HeartIcon /> {post.likesCount}
+              </span>
+              <span>
+                <CommentIcon /> {post.commentsCount}
+              </span>
+            </div>
+          </div>
+        </div>
+      ))}
+    </Wrapper>
+  );
 };
 
 export default ProfilePreview;

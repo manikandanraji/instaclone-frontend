@@ -11,20 +11,20 @@ import DetailedPost from "./pages/DetailedPost";
 import EditProfile from "./pages/EditProfile";
 
 const Routing = () => {
-	return (
-		<Router>
-			<Nav />
-			<Container>
-				<Switch>
-					<Route path="/explore" component={Explore} />
-					<Route path="/p/:postId" component={DetailedPost} />
-					<Route path="/accounts/edit" component={EditProfile} />
-					<Route path="/:username" component={Profile} />
-					<Route path="/" component={Home} />
-				</Switch>
-			</Container>
-		</Router>
-	);
+  return (
+    <Router>
+      <Nav />
+      <Container>
+        <Switch>
+          <Route path="/explore" component={Explore} />
+          <Route path="/p/:postId" component={DetailedPost} />
+          <Route path="/accounts/edit" component={EditProfile} />
+          <Route path="/:username" component={Profile} />
+          <Route path="/" component={Home} />
+        </Switch>
+      </Container>
+    </Router>
+  );
 };
 
 export default Routing;

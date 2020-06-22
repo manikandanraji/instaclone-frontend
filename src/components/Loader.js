@@ -13,32 +13,32 @@ const rotate = keyframes`
 `;
 
 const Wrapper = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
-	animation: ${rotate} 2s linear infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  animation: ${rotate} 2s linear infinite;
 
-	svg {
-		height: 50px;
-		width: 50px;
-		fill: ${props => props.theme.secondaryColor};
-	}
+  svg {
+    height: 50px;
+    width: 50px;
+    fill: ${(props) => props.theme.secondaryColor};
+  }
 
-	@media screen and (max-width: 500px) {
-		svg {
-			height: 40px;
-			width: 40px;
-		}
-	}
+  @media screen and (max-width: 500px) {
+    svg {
+      height: 40px;
+      width: 40px;
+    }
+  }
 `;
 
 const Loader = () => {
-	return (
-		<Wrapper>
-			<LoaderIcon />
-		</Wrapper>
-	);
+  return (
+    <Wrapper>
+      <LoaderIcon />
+    </Wrapper>
+  );
 };
 
 export default Loader;
