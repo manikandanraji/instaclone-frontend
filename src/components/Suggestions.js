@@ -108,7 +108,7 @@ const Suggestions = () => {
 
       <div className="suggestions">
         <h3>Suggestions For You</h3>
-        {users.map((user) => (
+        {users.slice(0, 4).map((user) => (
           <div key={user.username} className="suggestions-usercard">
             <UserCard user={user} />
             <Follow nobtn isFollowing={user.isFollowing} userId={user._id} />
