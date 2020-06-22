@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Avatar from "../styles/Avatar";
 import Follow from "./Follow";
@@ -54,6 +55,7 @@ const Wrapper = styled.div`
 const NoFeedSuggestions = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const history = useHistory();
 
   useEffect(() => {
     getUsers().then((res) => {
@@ -73,9 +75,15 @@ const NoFeedSuggestions = () => {
         {users.map((user) => (
           <div key={user._id} className="suggestion">
             <div className="user-info">
-              <Avatar src={user.avatar} alt="avatar" />
+              <Avatar
+                onClick={() => history.push(`/${user._id}`)}
+                src={user.avatar}
+                alt="avatar"
+              />
               <div className="user-meta">
-                <h4>{user.username}</h4>
+                <h4 onClick={() => history.push(`/${user._id}`)}>
+                  {user.username}
+                </h4>
                 <span className="secondary">{user.fullname}</span>
               </div>
             </div>
