@@ -76,12 +76,13 @@ const NoFeedSuggestions = () => {
           <div key={user._id} className="suggestion">
             <div className="user-info">
               <Avatar
-                onClick={() => history.push(`/${user._id}`)}
+								className="pointer"
+                onClick={() => history.push(`/${user.username}`)}
                 src={user.avatar}
                 alt="avatar"
               />
               <div className="user-meta">
-                <h4 onClick={() => history.push(`/${user._id}`)}>
+                <h4 className="pointer" onClick={() => history.push(`/${user.username}`)}>
                   {user.username}
                 </h4>
                 <span className="secondary">{user.fullname}</span>
