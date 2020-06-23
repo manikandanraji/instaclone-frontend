@@ -8,44 +8,54 @@ import { FeedContext } from "../context/FeedContext";
 import { getFeed } from "../services/api";
 
 const Wrapper = styled.div`
-  @media screen and (max-width: 1040px) {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+	@media screen and (max-width: 1040px) {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 `;
 
 const Home = () => {
-  const { feed, setFeed } = useContext(FeedContext);
-  const [loading, setLoading] = useState(true);
+	const { feed, setFeed } = useContext(FeedContext);
+	const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    getFeed().then((resp) => {
-      setFeed(resp.data.data);
-      setLoading(false);
-    });
-  }, [setFeed]);
+	const logoutUser = () => {
+		setFeed(null);
+		localStorage.removeItem("user");
+		window.location = "/";
+	};
 
-  if (loading) {
-    return <Loader />;
-  }
+	useEffect(() => {
+		getFeed()
+			.then(resp => {
+				setFeed(resp.data.data);
+				setLoading(false);
+			})
+			.catch(err => {
+				logoutUser();
+			});
+	}, [setFeed]);
 
-  return (
-    <Wrapper>
-      {feed.length > 0 ? (
-        <>
-          <div className="home">
-            {feed.map((post) => (
-              <Post key={post._id} post={post} />
-            ))}
-          </div>
-          <Suggestions />{" "}
-        </>
-      ) : (
-        <NoFeedSuggestions />
-      )}
-    </Wrapper>
-  );
+	if (loading) {
+		return <Loader />;
+	}
+
+	return (
+		<Wrapper>
+			{feed.length > 0 ? (
+				<>
+					<div className="home">
+						{feed.map(post => (
+							<Post key={post._id} post={post} />
+						))}
+					</div>
+					<Suggestions />{" "}
+				</>
+			) : (
+				<NoFeedSuggestions />
+			)}
+		</Wrapper>
+	);
 };
 
 export default Home;
