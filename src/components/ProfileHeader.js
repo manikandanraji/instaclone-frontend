@@ -133,6 +133,7 @@ const ModalContentWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
+	padding-right: 2rem;
   font-size: 0.9rem;
   width: 350px;
 
