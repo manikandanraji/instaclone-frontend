@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { toggleSave } from "../services/api";
+import { client } from "../utils";
 import { BookmarkIcon, FilledBookmarkIcon } from "./Icons";
 
 const SavePost = ({ isSaved, postId }) => {
@@ -12,10 +12,10 @@ const SavePost = ({ isSaved, postId }) => {
   const handleToggleSave = () => {
     if (savedState) {
       setSaved(false);
-      toggleSave({ postId });
+			client(`/posts/${postId}/toggleSave`)
     } else {
       setSaved(true);
-      toggleSave({ postId });
+			client(`/posts/${postId}/toggleSave`)
     }
   };
 

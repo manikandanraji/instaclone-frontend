@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Avatar from "../styles/Avatar";
 import Follow from "./Follow";
-import { getUsers } from "../services/api";
+import { client } from "../utils";
 import Loader from "./Loader";
 
 const Wrapper = styled.div`
@@ -58,8 +58,8 @@ const NoFeedSuggestions = () => {
   const history = useHistory();
 
   useEffect(() => {
-    getUsers().then((res) => {
-      setUsers(res.data.data);
+    client('/users').then((res) => {
+      setUsers(res.data);
       setLoading(false);
     });
   }, []);

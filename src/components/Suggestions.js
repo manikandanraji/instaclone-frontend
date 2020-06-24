@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Follow from "./Follow";
 import Avatar from "../styles/Avatar";
 import { UserContext } from "../context/UserContext";
-import { getUsers } from "../services/api";
+import { client } from "../utils";
 
 const Wrapper = styled.div`
   width: 280px;
@@ -97,8 +97,8 @@ const Suggestions = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    getUsers().then((response) => {
-      setUsers(response.data.data.filter((user) => !user.isFollowing));
+    client('/users').then((response) => {
+      setUsers(response.data.filter((user) => !user.isFollowing));
     });
   }, []);
 

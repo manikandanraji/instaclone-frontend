@@ -5,57 +5,57 @@ import NoFeedSuggestions from "../components/NoFeedSuggestions";
 import Post from "../components/Post";
 import Loader from "../components/Loader";
 import { FeedContext } from "../context/FeedContext";
-import { getFeed } from "../services/api";
+import { UserContext } from "../context/UserContext";
+import { client } from "../utils";
 
 const Wrapper = styled.div`
-  @media screen and (max-width: 1040px) {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+	@media screen and (max-width: 1040px) {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 `;
 
 const Home = () => {
-  const { feed, setFeed } = useContext(FeedContext);
-  const [loading, setLoading] = useState(true);
+	const { setUser } = useContext(UserContext);
+	const { feed, setFeed } = useContext(FeedContext);
+	const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const logoutUser = () => {
-      setFeed(null);
-      localStorage.removeItem("user");
-      window.location = "/";
-    };
+	useEffect(() => {
+		const logout = () => {
+			localStorage.removeItem("token");
+			localStorage.removeItem("user");
+			setUser(null);
+		};
 
-    getFeed()
-      .then((resp) => {
-        setFeed(resp.data.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        logoutUser();
-      });
-  }, [setFeed]);
+		client("/users/feed")
+			.then(res => {
+				setFeed(res.data);
+				setLoading(false);
+			})
+			.catch(res => logout());
+	}, [setFeed, setUser]);
 
-  if (loading) {
-    return <Loader />;
-  }
+	if (loading) {
+		return <Loader />;
+	}
 
-  return (
-    <Wrapper>
-      {feed.length > 0 ? (
-        <>
-          <div className="home">
-            {feed.map((post) => (
-              <Post key={post._id} post={post} />
-            ))}
-          </div>
-          <Suggestions />{" "}
-        </>
-      ) : (
-        <NoFeedSuggestions />
-      )}
-    </Wrapper>
-  );
+	return (
+		<Wrapper>
+			{feed.length > 0 ? (
+				<>
+					<div className="home">
+						{feed.map(post => (
+							<Post key={post._id} post={post} />
+						))}
+					</div>
+					<Suggestions />{" "}
+				</>
+			) : (
+				<NoFeedSuggestions />
+			)}
+		</Wrapper>
+	);
 };
 
 export default Home;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Button from "../styles/Button";
-import { follow } from "../services/api";
+import { client } from "../utils";
 
 const Follow = ({ nobtn, isFollowing, incFollowers, decFollowers, userId }) => {
   const [followingState, setFollowingState] = useState(isFollowing);
@@ -13,13 +13,13 @@ const Follow = ({ nobtn, isFollowing, incFollowers, decFollowers, userId }) => {
       if (decFollowers) {
         decFollowers();
       }
-      follow({ url: `/users/${userId}/unfollow` });
+			client(`/users/${userId}/unfollow`)
     } else {
       setFollowingState(true);
       if (incFollowers) {
         incFollowers();
       }
-      follow({ url: `/users/${userId}/follow` });
+			client(`/users/${userId}/follow`)
     }
   };
 

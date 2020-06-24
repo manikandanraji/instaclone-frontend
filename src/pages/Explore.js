@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import PostPreview from "../components/PostPreview";
 import Loader from "../components/PostPreview";
-import { getPosts } from "../services/api";
+import { client } from '../utils';
 
 const Explore = () => {
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    getPosts().then((response) => {
-      setPosts(response.data.data);
-      setLoading(false);
-    });
+		client('/posts').then(res => {
+			setPosts(res.data)
+			setLoading(false)
+		})
   }, []);
 
   if (loading) {

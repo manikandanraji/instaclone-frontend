@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { toggleLike } from "../services/api";
+import { client } from "../utils";
 import { HeartIcon, FilledHeartIcon } from "./Icons";
 
 const LikePost = ({ isLiked, postId, incLikes, decLikes }) => {
@@ -13,11 +13,11 @@ const LikePost = ({ isLiked, postId, incLikes, decLikes }) => {
     if (likedState) {
       setLiked(false);
       decLikes();
-      toggleLike({ postId });
+			client(`/posts/${postId}/toggleLike`)
     } else {
       setLiked(true);
       incLikes();
-      toggleLike({ postId });
+			client(`/posts/${postId}/toggleLike`)
     }
   };
 

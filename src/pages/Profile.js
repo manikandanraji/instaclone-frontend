@@ -6,7 +6,7 @@ import ProfileHeader from "../components/ProfileHeader";
 import Placeholder from "../components/Placeholder";
 import Loader from "../components/Loader";
 import { PostIcon, SavedIcon } from "../components/Icons";
-import { getProfile } from "../services/api";
+import { client } from "../utils";
 
 const Wrapper = styled.div`
   .profile-tab {
@@ -46,11 +46,11 @@ const Profile = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    getProfile({ username })
+    client(`/users/${username}`)
       .then((res) => {
         setLoading(false);
         setDeadend(false);
-        setProfile(res.data.data);
+        setProfile(res.data);
       })
       .catch((err) => setDeadend(true));
   }, [username]);

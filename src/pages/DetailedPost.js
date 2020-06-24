@@ -10,7 +10,7 @@ import Loader from "../components/Loader";
 import Modal from "../components/Modal";
 import { ModalContent } from "../components/Post";
 import useInput from "../hooks/useInput";
-import { getPost, addComment } from "../services/api";
+import { client } from "../utils";
 import { timeSince } from "../utils";
 import { MoreIcon, CommentIcon, InboxIcon } from "../components/Icons";
 
@@ -122,14 +122,10 @@ const DetailedPost = () => {
     if (e.keyCode === 13) {
       e.preventDefault();
 
-      addComment({
-        postId: post._id,
-        body: { text: comment.value },
-      }).then((resp) => {
-        setComments([...commentsState, resp.data.data]);
+			client(`/posts/${post._id}/comments`, { body: { text: comment.value } }).then(resp => {
+        setComments([...commentsState, resp.data]);
         scrollToBottom();
-        window.scrollTo(0, 0);
-      });
+			})
 
       comment.setValue("");
     }
@@ -137,11 +133,11 @@ const DetailedPost = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    getPost({ postId })
+    client(`/posts/${postId}`)
       .then((res) => {
-        setPost(res.data.data);
-        setComments(res.data.data.comments);
-        setLikes(res.data.data.likesCount);
+        setPost(res.data);
+        setComments(res.data.comments);
+        setLikes(res.data.likesCount);
         setLoading(false);
         setDeadend(false);
       })

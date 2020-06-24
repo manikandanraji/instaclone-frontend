@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { toast } from "react-toastify";
-import { authenticate, me } from "../services/api";
+import { client } from "../utils";
 import { FormWrapper } from "./Login";
 import useInput from "../hooks/useInput";
 import { UserContext } from "../context/UserContext";
@@ -40,22 +40,16 @@ const Signup = ({ login }) => {
       fullname: fullname.value,
     };
 
-    let tokenResponse;
     try {
-      tokenResponse = await authenticate({ url: "/auth/signup", body });
+			const { token } = await client('/auth/signup', { body })
+			localStorage.setItem('token', token)
     } catch (err) {
-      return toast.error(err.response.data.message);
+      return toast.error(err.message);
     }
 
-    const userResponse = await me({
-      url: "/auth/me",
-      token: tokenResponse.data.token,
-    });
-
-    userResponse.data.data.token = tokenResponse.data.token;
-
-    localStorage.setItem("user", JSON.stringify(userResponse.data.data));
-    setUser(userResponse.data.data);
+		const user = await client('/auth/me')
+    setUser(user.data);
+    localStorage.setItem("user", JSON.stringify(user.data));
 
     fullname.setValue("");
     username.setValue("");
