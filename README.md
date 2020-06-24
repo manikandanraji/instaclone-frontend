@@ -8,9 +8,8 @@ Instagram clone using MERN stack. This is the frontend repo built with Reactjs. 
 1. React Router (for routing)
 2. Styled Components (for styling)
 3. React Toastify (for toast-notifications)
-4. Axios (api calls)
 
-Global state management is taken care of by React Context API. For image uploads, instaclone uses Cloudinary
+Global state management is taken care of by React Context API. For image uploads, instaclone uses Cloudinary. 
 
 ## Running Locally
 
