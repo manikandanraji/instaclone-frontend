@@ -167,7 +167,7 @@ const ModalContent = ({ loggedInUser, users, closeModal, title }) => {
   const history = useHistory();
 
   return (
-    <>
+		<div style={{ maxHeight: '400px', overflowY: 'auto' }}>
       <div style={modalHeaderStyle}>
         <h3>{title}</h3>
         <CloseIcon onClick={closeModal} />
@@ -200,7 +200,7 @@ const ModalContent = ({ loggedInUser, users, closeModal, title }) => {
           <Follow isFollowing={user.isFollowing} userId={user._id} />
         </ModalContentWrapper>
       ))}
-    </>
+    </div>
   );
 };
 
