@@ -95,7 +95,6 @@ const ProfileForm = () => {
 	const username = useInput(user.username);
 	const bio = useInput(user.bio);
 	const website = useInput(user.website);
-	const email = useInput(user.email);
 
 	const handleImageUpload = e => {
 		if (e.target.files[0]) {
@@ -114,16 +113,12 @@ const ProfileForm = () => {
 			return toast.error("The username field should not be empty");
 		}
 
-		if (!email.value) {
-			return toast.error("The email field should not be empty");
-		}
 
 		const body = {
 			fullname: fullname.value,
 			username: username.value,
 			bio: bio.value,
 			website: website.value,
-			email: email.value,
 			avatar: newAvatar || user.avatar
 		};
 
@@ -133,7 +128,7 @@ const ProfileForm = () => {
 				localStorage.setItem("user", JSON.stringify(res.data));
 				history.push(`/${body.username || user.username}`);
 			})
-			.catch(err => toast.error(err.response.data.message));
+			.catch(err => toast.error(err.message));
 	};
 
 	return (
@@ -203,11 +198,6 @@ const ProfileForm = () => {
 						value={bio.value}
 						onChange={bio.onChange}
 					></textarea>
-				</div>
-
-				<div className="input-group">
-					<label className="bold">Email</label>
-					<input type="email" value={email.value} onChange={email.onChange} />
 				</div>
 
 				<Button>Submit</Button>
