@@ -133,7 +133,7 @@ const ModalContentWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-	padding-right: 2rem;
+  padding-right: 2rem;
   font-size: 0.9rem;
   width: 350px;
 
@@ -168,7 +168,7 @@ const ModalContent = ({ loggedInUser, users, closeModal, title }) => {
   const history = useHistory();
 
   return (
-		<div style={{ maxHeight: '400px', overflowY: 'auto' }}>
+    <div style={{ maxHeight: "400px", overflowY: "auto" }}>
       <div style={modalHeaderStyle}>
         <h3>{title}</h3>
         <CloseIcon onClick={closeModal} />

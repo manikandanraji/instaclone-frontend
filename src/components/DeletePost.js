@@ -17,7 +17,7 @@ const DeletePost = ({ postId, closeModal, goToHome }) => {
 
     setFeed(feed.filter((post) => post._id !== postId));
     toast.success("Your post has been deleted successfully");
-		client(`/posts/${postId}`, { method: 'DELETE' })
+    client(`/posts/${postId}`, { method: "DELETE" });
   };
 
   return (

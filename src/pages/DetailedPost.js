@@ -122,10 +122,12 @@ const DetailedPost = () => {
     if (e.keyCode === 13) {
       e.preventDefault();
 
-			client(`/posts/${post._id}/comments`, { body: { text: comment.value } }).then(resp => {
+      client(`/posts/${post._id}/comments`, {
+        body: { text: comment.value },
+      }).then((resp) => {
         setComments([...commentsState, resp.data]);
         scrollToBottom();
-			})
+      });
 
       comment.setValue("");
     }

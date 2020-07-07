@@ -58,7 +58,7 @@ const NoFeedSuggestions = () => {
   const history = useHistory();
 
   useEffect(() => {
-    client('/users').then((res) => {
+    client("/users").then((res) => {
       setUsers(res.data);
       setLoading(false);
     });
