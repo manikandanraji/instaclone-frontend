@@ -33,7 +33,7 @@ const Home = () => {
         setFeed(res.data);
         setLoading(false);
       })
-      .catch((res) => logout());
+			.catch(res => console.log(res));
   }, [setFeed, setUser]);
 
   if (loading) {
