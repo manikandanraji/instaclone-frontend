@@ -4,7 +4,7 @@ Instagram clone using MERN stack.
 
 This is the frontend repo built with React. If you are looking for the backend repo, [click here](https://github.com/manikandanraji/instaclone-backend)
 
-[Check out the deployed site](https://instaclone2.netlify.app)
+[Check out the deployed site](https://merninsta.netlify.app)
 
 ## Core Packages
 1. React Router (for routing)
